@@ -37,18 +37,18 @@ if __name__ == '__main__':
         db.session.commit()
 
         print("Creating workouts")
-        workout1 = Workout(name="Bicep Curls", instructions="Curl those biceps", force="pull",
-                           level="beginner", mechanic="isolation", equipment="dumbell", primary_muscles="biceps",
-                           category="strength")
-        workout2 = Workout(name="Tricep Extension", instructions="Extend those triceps", force="push",
-                           level="beginner", mechanic="isolation", equipment="dumbell", primary_muscles="triceps",
-                           category="strength")
-        workout3 = Workout(name="Bench press", instructions="Push that bar", force="push",
-                           level="beginner", mechanic="compound", equipment="barbell", primary_muscles="pectoralis major",
-                           category="strength", secondary_muscles="triceps")
+        # workout1 = Workout(name="Bicep Curls", instructions="Curl those biceps", force="pull",
+        #                    level="beginner", mechanic="isolation", equipment="dumbell", primary_muscles="biceps",
+        #                    category="strength")
+        # workout2 = Workout(name="Tricep Extension", instructions="Extend those triceps", force="push",
+        #                    level="beginner", mechanic="isolation", equipment="dumbell", primary_muscles="triceps",
+        #                    category="strength")
+        # workout3 = Workout(name="Bench press", instructions="Push that bar", force="push",
+        #                    level="beginner", mechanic="compound", equipment="barbell", primary_muscles="pectoralis major",
+        #                    category="strength", secondary_muscles="triceps")
 
-        db.session.add_all([workout1, workout2, workout3])
-        db.session.commit()
+        # db.session.add_all([workout1, workout2, workout3])
+        # db.session.commit()
 
         print("Creating user_workouts...")
         user_workout1 = UserWorkout(user_id=1, workout_id=1)

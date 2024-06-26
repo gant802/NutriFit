@@ -108,24 +108,24 @@ class Workout(db.Model, SerializerMixin):
     def validate_name(self, key, name):
         if not name:
             raise ValueError('Name cannot be empty')
-        elif len(name) > 50:
+        elif len(name) > 100:
             raise ValueError('Name cannot be longer than 50 characters')
         return name
     
-    @validates('instructions')
-    def validate_instructions(self, key, instructions):
-        if not instructions:
-            raise ValueError('Instructions cannot be empty')
-        elif len(instructions) > 300:
-            raise ValueError('Instructions cannot be longer than 200 characters')
-        return instructions
+    # @validates('instructions')
+    # def validate_instructions(self, key, instructions):
+    #     if not instructions:
+    #         raise ValueError('Instructions cannot be empty')
+    #     elif len(instructions) > 2000:
+    #         raise ValueError('Instructions cannot be longer than 200 characters')
+    #     return instructions
     
-    @validates('category')
-    def validate_category(self, key, category):
-        categories = ['beginner', 'intermediate', 'expert']
-        if category and category not in categories:
-            raise ValueError(f'Category must be one of {categories}')
-        return category
+    @validates('level')
+    def validate_category(self, key, level):
+        levels = ['beginner', 'intermediate', 'expert']
+        if level and level not in levels:
+            raise ValueError(f'Category must be one of {levels}')
+        return level
 
 
 

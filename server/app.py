@@ -31,9 +31,39 @@ class Workouts(Resource):
         workouts = Workout.query.all()
         workouts_list = [workout.to_dict() for workout in workouts]
         return make_response(workouts_list, 200)
+    
+    def post(self):
+        params = request.json
+        try:
+            workout = Workout(name=params['name'],
+                            force=params['force'],
+                            level=params['level'],
+                            mechanic=params['mechanic'],
+                            equipment=params['equipment'],
+                            primary_muscles=params['primaryMuscles'],
+                            secondary_muscles=params['secondaryMuscles'],
+                            instructions=params['instructions'],
+                            category=params['category'])
+            db.session.add(workout)
+            db.session.commit()
+            return make_response(workout.to_dict(), 201)
+        except Exception as e:
+            return make_response(str(e), 400)
+        
+            
 
 api.add_resource(Workouts, '/workouts')
 
+
+
+
+
+
+
+
+
+
+#? Authentication------------------------------
 class CheckSession(Resource):
     def get(self):
         user_id = session.get('user_id')
