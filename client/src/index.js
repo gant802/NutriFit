@@ -4,8 +4,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from 'react-dom/client';
 import App from "./components/App"
 import Home from "./Pages/home";
-import Login from "./Pages/login";
-import CreateProfile from "./Pages/createProfile";
+import LoginOrCreate from "./Pages/loginCreate";
+import CreateProfile from "./components/createProfile";
 import Calendar from "./Pages/calendar";
 import Nutrition from "./Pages/nutrition";
 import UserProfile from "./Pages/userProfile";
@@ -22,8 +22,8 @@ children: [
         element: <LandingPage />
     },
     {
-        path: '/login',
-        element: <Login />
+        path: '/loginOrCreate',
+        element: <LoginOrCreate />
     },
     {
         path: '/createProfile',

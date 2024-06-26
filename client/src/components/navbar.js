@@ -14,7 +14,7 @@ function Navbar() {
                 <NavLink to='/workoutsPage'>Workouts</NavLink>
                 <NavLink to='/nutrition'>Nutrition</NavLink>
                 <NavLink to={`/calendar/${signedIn.id}`}>Calendar</NavLink>
-                {signedIn ? <NavLink to={`/userProfile/${signedIn.id}`}>My Profile</NavLink> : <NavLink to='/login'>Login</NavLink>}
+                {signedIn ? <NavLink to={`/userProfile/${signedIn.id}`}>My Profile</NavLink> : <NavLink to='/loginOrCreate'>Login</NavLink>}
             </div>
 
 

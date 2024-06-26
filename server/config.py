@@ -32,3 +32,6 @@ api = Api(app)
 CORS(app)
 
 bcrypt = Bcrypt(app)
+
+#! How to get this: python -c 'import os; print(os.urandom(16))'
+app.secret_key = b'$P\xca\xf4\xef\xc2\xcb\xcd\x8f\xcf\xf7=\xddW\xffa'
