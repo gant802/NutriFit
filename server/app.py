@@ -50,9 +50,26 @@ class Workouts(Resource):
         except Exception as e:
             return make_response(str(e), 400)
         
-            
-
 api.add_resource(Workouts, '/workouts')
+
+class WorkoutById(Resource):
+    def get(self, id):
+        workout = Workout.query.filter_by(id=id).first()
+        if workout:
+            return make_response(workout.to_dict(), 200)
+        else:
+            return make_response('Workout not found', 404)
+        
+    def delete(self, id):
+        workout = Workout.query.filter_by(id=id).first()
+        if workout:
+            db.session.delete(workout)
+            db.session.commit()
+            return make_response('Workout deleted', 200)
+        else:
+            return make_response('Workout not found', 404)
+        
+api.add_resource(WorkoutById, '/workouts/<int:id>')
 
 
 

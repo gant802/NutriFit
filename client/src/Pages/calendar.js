@@ -1,11 +1,19 @@
-import React from "react";
+import React, { useState} from "react";
+import Calendar from 'react-calendar'
 
-function Calendar(){
+function CalendarPage(){
+    const [date, setDate] = useState(new Date())
+
+    const onChange = (date) => {
+        setDate(date)
+        console.log(date)
+        
+    }
     return(
         <div>
-            <h1>Calendar page</h1>
+            <Calendar onChange={onChange} value={date}/>
         </div>
     )
 }
 
-export default Calendar
+export default CalendarPage

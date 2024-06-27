@@ -6,7 +6,7 @@ import App from "./components/App"
 import Home from "./Pages/home";
 import LoginOrCreate from "./Pages/loginCreate";
 import CreateProfile from "./components/createProfile";
-import Calendar from "./Pages/calendar";
+import CalendarPage from "./Pages/calendar";
 import Nutrition from "./Pages/nutrition";
 import UserProfile from "./Pages/userProfile";
 import WorkoutsPage from "./Pages/workoutsPage";
@@ -31,7 +31,7 @@ children: [
     },
     {
         path: '/calendar/:id',
-        element: <Calendar />
+        element: <CalendarPage />
     },
     {
         path: '/nutrition',

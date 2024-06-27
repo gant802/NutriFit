@@ -112,13 +112,13 @@ class Workout(db.Model, SerializerMixin):
             raise ValueError('Name cannot be longer than 50 characters')
         return name
     
-    # @validates('instructions')
-    # def validate_instructions(self, key, instructions):
-    #     if not instructions:
-    #         raise ValueError('Instructions cannot be empty')
-    #     elif len(instructions) > 2000:
-    #         raise ValueError('Instructions cannot be longer than 200 characters')
-    #     return instructions
+    @validates('instructions')
+    def validate_instructions(self, key, instructions):
+        if not instructions:
+            raise ValueError('Instructions cannot be empty')
+        elif len(instructions) > 3500:
+            raise ValueError('Instructions cannot be longer than 200 characters')
+        return instructions
     
     @validates('level')
     def validate_category(self, key, level):

@@ -9,7 +9,6 @@ function WorkoutsContainer({workouts}){
 
     return(
         <div id="workoutsListCont">
-            <h2>Workout container</h2>
             {workoutsListed} 
         </div>
        
