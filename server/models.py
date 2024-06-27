@@ -136,6 +136,8 @@ class Workout(db.Model, SerializerMixin):
 class UserWorkout(db.Model, SerializerMixin):
     __tablename__ = 'user_workouts'
 
+    serialize_rules = ('-user',)
+
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     workout_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))

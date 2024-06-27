@@ -1,11 +1,14 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 function WorkoutNode({workout, calendarPage, addToCalendar}){
     const [showDetails, setShowDetails] = useState(false);
+    
 
     function handleAddToCalendar(){
         addToCalendar(workout)
     }
+
+    
 
 
     return(

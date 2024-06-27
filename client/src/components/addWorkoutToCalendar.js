@@ -1,11 +1,11 @@
-import React, {useState, useContext} from "react";
+import React, {useState} from "react";
 import WorkoutNode from "./workoutNode";
-import { SignedInContext } from "../components/App";
 
-function AddWorkoutToCalendar({workouts, date}){
+
+function AddWorkoutToCalendar({workouts, date, signedIn}){
     const [searchInput, setSearchInput] = useState("");
     const [calendarPage, setCalendarPage] = useState(true)
-    const [signedIn] = useContext(SignedInContext)
+   
 
     function addWorkoutToCalendar(data){
         fetch('/workout_calendar_events', {

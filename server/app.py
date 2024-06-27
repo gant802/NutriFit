@@ -26,6 +26,21 @@ class Users(Resource):
     
 api.add_resource(Users, '/users')
 
+class UserWorkouts(Resource):
+    def get(self, id):
+        user_workouts = UserWorkout.query.filter_by(user_id=id).all()
+        user_workouts_list = [user_workout.to_dict() for user_workout in user_workouts]
+        return make_response(user_workouts_list, 200)
+    
+    def post(self, id):
+        params = request.json
+        user_workout = UserWorkout(user_id=id, workout_id=params['workout_id'])
+        db.session.add(user_workout)
+        db.session.commit()
+        return make_response(user_workout.to_dict(), 201)
+
+api.add_resource(UserWorkouts, '/user_workouts/<int:id>')
+
 class Workouts(Resource):
     def get(self):
         workouts = Workout.query.all()
@@ -88,9 +103,21 @@ class WorkoutCalendarEvents(Resource):
         
 api.add_resource(WorkoutCalendarEvents, '/workout_calendar_events')
 
+class WorkoutsCalendarEvent(Resource):
+    def get(self):
+        user_id = request.args.get('user_id')
+        date = request.args.get('date')
+        workout_calendar_events = WorkoutCalendarEvent.query.filter_by(user_id=user_id, date=date).all()
+        if workout_calendar_events:
+            workouts_list = []
+            for workout_calendar_event in workout_calendar_events:
+                workout = Workout.query.filter_by(id=workout_calendar_event.workout_id).first()
+                workouts_list.append(workout.to_dict())
+            return make_response(workouts_list, 200)
+        else:
+            return make_response('Workouts not found', 404)
 
-
-
+api.add_resource(WorkoutsCalendarEvent, '/workouts_calendar_event')
 
 
 
