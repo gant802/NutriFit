@@ -26,7 +26,6 @@ function WorkoutsPage(){
         <div id="workoutPageCont">
             <h1>Workouts Search💪🏻</h1>
             <input
-                        id="searchInput"
                         type="text"
                         placeholder="Search for workouts by name..."
                         value={searchInput}
