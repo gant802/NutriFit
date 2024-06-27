@@ -1,10 +1,16 @@
 import React, {useState} from "react";
 
-function WorkoutNode({workout}){
+function WorkoutNode({workout, calendarPage, addToCalendar}){
     const [showDetails, setShowDetails] = useState(false);
+
+    function handleAddToCalendar(){
+        addToCalendar(workout)
+    }
+
 
     return(
         <div className="workoutNodeCont">
+            {calendarPage ? <button onClick={handleAddToCalendar}>Add to Calendar</button> : <button>Add to Profile</button>}
             <p onClick={() => setShowDetails(!showDetails)}>{showDetails ? "Close Details" : "Show Details"}</p>
             {!showDetails ? <h2>{workout.name}</h2> :
             <>

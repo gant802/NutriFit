@@ -28,6 +28,7 @@ class User(db.Model, SerializerMixin):
 
     user_workouts = db.relationship("UserWorkout", back_populates = "user")
     workouts = association_proxy("user_workouts", "workout")
+    workout_calendar_events = db.relationship("WorkoutCalendarEvent", back_populates="user")
 
     #encrypts password
     @property
@@ -145,6 +146,17 @@ class UserWorkout(db.Model, SerializerMixin):
 
 
 
+class WorkoutCalendarEvent(db.Model, SerializerMixin):
+    __tablename__ = 'workout_calendar_events'
+
+    serialize_rules = ('-user',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    workout_id = db.Column(db.Integer, db.ForeignKey('workouts.id'), nullable=False)
+    date = db.Column(db.String, nullable=False)
+
+    user = db.relationship("User", back_populates="workout_calendar_events")
 
 
 

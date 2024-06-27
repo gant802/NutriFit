@@ -8,7 +8,7 @@ from flask_restful import Resource
 
 # Local imports
 from config import app, db, api
-from models import User, Workout, UserWorkout
+from models import User, Workout, UserWorkout, WorkoutCalendarEvent
 # Add your model imports
 
 
@@ -71,7 +71,22 @@ class WorkoutById(Resource):
         
 api.add_resource(WorkoutById, '/workouts/<int:id>')
 
-
+class WorkoutCalendarEvents(Resource):
+    def post(self):
+        params = request.json
+        try:
+            workout_calendar_event = WorkoutCalendarEvent(
+                user_id = params['user_id'],
+                workout_id = params['workout_id'],
+                date = params['date']
+            )
+            db.session.add(workout_calendar_event)
+            db.session.commit()
+            return make_response(workout_calendar_event.to_dict(), 201)
+        except Exception as e:
+            return make_response(str(e), 400)
+        
+api.add_resource(WorkoutCalendarEvents, '/workout_calendar_events')
 
 
 
