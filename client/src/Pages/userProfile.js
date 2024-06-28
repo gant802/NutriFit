@@ -1,10 +1,27 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { SignedInContext } from "../components/App";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import WorkoutNode from "../components/workoutNode";
 
 function UserProfile() {
     const [signedIn, setSignedIn] = useContext(SignedInContext)
+    const [userWorkouts, setUserWorkouts] = useState([])
     const navigate = useNavigate()
+    const { id } = useParams()
+    let workoutsListed;
+
+    useEffect(() => {
+        fetch(`/user_workouts/${id}`)
+        .then(res => {
+            if(res.ok){
+                res.json().then(data => setUserWorkouts(() => data))
+            }
+        }).catch(error => console.log(error))
+    }, [])
+
+    // useEffect(() => {
+        
+    // }, [userWorkouts])
 
     //? Function to log user out
     function logout() {
@@ -18,10 +35,24 @@ function UserProfile() {
         })
     }
 
+    if (userWorkouts) {
+        workoutsListed = userWorkouts.map(workout => {
+        return <WorkoutNode signedIn={signedIn} key={workout.id} workout={workout.workout} userWorkouts={userWorkouts}/>
+    })
+    }
+
+    
+
     return (
         <div>
-            <h1>User Profile page</h1>
+            <div id="userInfoCont">
+                <h1>User {signedIn.username} Profile page</h1>
             <button onClick={logout}>Logout</button>
+            </div>
+            <div>
+                <h2>Workouts</h2>
+                {workoutsListed}
+            </div>
         </div>
     )
 }

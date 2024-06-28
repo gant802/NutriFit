@@ -41,6 +41,19 @@ class UserWorkouts(Resource):
 
 api.add_resource(UserWorkouts, '/user_workouts/<int:id>')
 
+class UserWorkoutById(Resource):
+    def delete(self, user_id, workout_id):
+        user_workout = UserWorkout.query.filter_by(user_id=user_id, workout_id=workout_id).first()
+
+        if user_workout:
+            db.session.delete(user_workout)
+            db.session.commit()
+            return make_response({"message": "Workout deleted"}, 200)
+        else:
+            return make_response({'message': 'UserWorkout not found'}, 404)
+
+api.add_resource(UserWorkoutById, '/user_workout/<int:user_id>/<int:workout_id>')
+
 class Workouts(Resource):
     def get(self):
         workouts = Workout.query.all()
