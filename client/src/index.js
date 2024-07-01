@@ -2,6 +2,7 @@ import React from "react";
 import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ReactDOM from 'react-dom/client';
+import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import App from "./components/App"
 import Home from "./Pages/home";
 import LoginOrCreate from "./Pages/loginCreate";

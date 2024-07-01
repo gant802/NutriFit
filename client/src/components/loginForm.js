@@ -45,6 +45,7 @@ function LoginForm({ switchPage, setSwitchPage }) {
 
     return (
         <div id="loginCont">
+            <h2 className="loginCreateTitle">Login</h2>
 
             <Formik
                 initialValues={{
@@ -76,6 +77,9 @@ function LoginForm({ switchPage, setSwitchPage }) {
                 }}
             </Formik>
             {!switchPage ? <p className="loginCreateErrorText">{error.error}</p> : ""}
+
+            <p>New user?</p>
+            <p className="toggleLoginCreate" onClick={() => setSwitchPage(!switchPage)}>Create Account</p>
 
         </div>
     )

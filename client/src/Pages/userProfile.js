@@ -19,9 +19,6 @@ function UserProfile() {
         }).catch(error => console.log(error))
     }, [])
 
-    // useEffect(() => {
-        
-    // }, [userWorkouts])
 
     //? Function to log user out
     function logout() {
@@ -37,7 +34,7 @@ function UserProfile() {
 
     if (userWorkouts) {
         workoutsListed = userWorkouts.map(workout => {
-        return <WorkoutNode signedIn={signedIn} key={workout.id} workout={workout.workout} userWorkouts={userWorkouts}/>
+        return <WorkoutNode signedIn={signedIn} key={workout.id} workout={workout.workout} setUserWorkouts={setUserWorkouts} userWorkouts={userWorkouts}/>
     })
     }
 

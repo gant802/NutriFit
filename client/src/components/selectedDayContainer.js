@@ -7,9 +7,16 @@ function SelectedDayContainer({date}){
     const [workouts, setWorkouts] = useState([]);
     const [workoutsOnDay, setWorkoutsOnDay] = useState("")
     const [signedIn] = useContext(SignedInContext)
+    const [userWorkouts, setUserWorkouts] = useState([])
     let workoutsListed;
 
     useEffect(() => {
+        fetch(`/user_workouts/${signedIn.id}`)
+        .then(res => {
+            if(res.ok){
+                res.json().then(data => setUserWorkouts(() => data))
+            }
+        }).catch(error => console.log(error))
         fetch('/workouts')
         .then(res => res.json())
         .then(data => setWorkouts(data))
@@ -26,8 +33,8 @@ function SelectedDayContainer({date}){
     }, [date])
 
     if (workoutsOnDay) {
-        workoutsListed = workoutsOnDay.map(workout => {
-        return <WorkoutNode key={workout.id} workout={workout} />
+        workoutsListed = workoutsOnDay.map((workout, index) => {
+        return <WorkoutNode key={index} workout={workout} setUserWorkouts={setUserWorkouts} userWorkouts={userWorkouts} signedIn={signedIn}/>
     })
     }
 
@@ -35,10 +42,12 @@ function SelectedDayContainer({date}){
     
 
     return (
-        <div>
-            <p>{date.toString().substring(0, 15)}</p>
-            <AddWorkoutToCalendar signedIn={signedIn} date={date} workouts={workouts}/>
-            {workoutsListed}
+        <div id="selectedDayCont">
+             <div className="workoutsForSelectedDayCont">
+            <h2 id="selectedDate">{date.toString().substring(0, 15)}</h2>
+                {workoutsListed}
+            </div>  
+            <AddWorkoutToCalendar setWorkoutsOnDay={setWorkoutsOnDay} workoutsOnDay={workoutsOnDay} signedIn={signedIn} date={date} workouts={workouts}/>
         </div>
     )
 }

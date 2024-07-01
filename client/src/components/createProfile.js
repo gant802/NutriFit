@@ -53,6 +53,7 @@ function CreateProfile({ switchPage, setSwitchPage }) {
 
     return (
         <div id="signupFormCont">
+            <h2 className="loginCreateTitle">Create Profile</h2>
 
             <Formik
                 initialValues={{
@@ -82,7 +83,7 @@ function CreateProfile({ switchPage, setSwitchPage }) {
                         favorite_workout
                     },
                         handleChange, handleSubmit, errors } = props
-                    return (<form className="signupEditForm" onSubmit={handleSubmit}>
+                    return (<form className="loginSignupEditForm" onSubmit={handleSubmit}>
                         <p>*required fields</p>
                         <label>*First Name: </label>
                         <input onChange={handleChange} value={first_name}
@@ -136,6 +137,8 @@ function CreateProfile({ switchPage, setSwitchPage }) {
                 }}
             </Formik>
             {switchPage ? <p className="loginCreateErrorText">{error.error}</p> : ""}
+
+            <p className="toggleLoginCreate" onClick={() => setSwitchPage(!switchPage)}>Back to Login</p>
         </div>
     )
 }

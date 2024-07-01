@@ -1,13 +1,16 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import WorkoutNode from "./workoutNode";
 
 
-function AddWorkoutToCalendar({workouts, date, signedIn}){
+function AddWorkoutToCalendar({ workouts, date, signedIn, workoutsOnDay, setWorkoutsOnDay }) {
     const [searchInput, setSearchInput] = useState("");
-    const [calendarPage, setCalendarPage] = useState(true)
-   
+    const [calendarPage, setCalendarPage] = useState(true);
 
-    function addWorkoutToCalendar(data){
+
+    function addWorkoutToCalendar(data) {
+        if (!signedIn) {
+            return alert("Please sign in to add a workout to your calendar");
+        }
         fetch('/workout_calendar_events', {
             method: 'POST',
             headers: {
@@ -19,8 +22,10 @@ function AddWorkoutToCalendar({workouts, date, signedIn}){
                 user_id: signedIn.id
             }),
         }).then(res => res.json())
-        .then(data => console.log(data))
-        .catch(error => console.log(error))
+            .then(data => {
+                setWorkoutsOnDay([...workoutsOnDay, data]);
+            })
+            .catch(error => console.log(error))
     }
 
     const filteredWorkouts = workouts.filter(workout => {
@@ -34,18 +39,23 @@ function AddWorkoutToCalendar({workouts, date, signedIn}){
 
 
     return (
-        <div>
-            <p>Add workout</p>
-            <input
-                        type="text"
-                        placeholder="Search for workouts by name..."
-                        value={searchInput}
-                        onChange={(e) => {
-                            setSearchInput(e.target.value)
-                        }}
-                    />
+        <div id="addWorkoutCont">
+            <div id="addWorkoutHeader">
+                <h2>Add workout</h2>
+                <input
+                    type="text"
+                    placeholder="Search for workouts by name..."
+                    value={searchInput}
+                    onChange={(e) => {
+                        setSearchInput(e.target.value)
+                    }}
+                />
                 <button>Search</button>
+            </div>
+            <div id="addWorkoutToCalendarResultsCont">
                 {searchInput === "" ? "" : workoutsListed}
+            </div>
+
         </div>
     )
 }

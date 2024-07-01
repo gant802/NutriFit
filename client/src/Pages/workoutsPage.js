@@ -24,8 +24,11 @@ function WorkoutsPage(){
 
     return(
         <div id="workoutPageCont">
-            <h1>Workouts Search💪🏻</h1>
-            <input
+            <div id="searchWorkoutCont">
+               <h1>Workouts Search💪🏻</h1>
+               <div>
+                <div>
+                    <input id="searchWorkoutInput"
                         type="text"
                         placeholder="Search for workouts by name..."
                         value={searchInput}
@@ -33,8 +36,14 @@ function WorkoutsPage(){
                             setSearchInput(e.target.value)
                         }}
                     />
-                <button>Search</button>
-            <button onClick={() => setToggleAdd(!toggleAdd)}>{toggleAdd ? "Back to Workouts" : "Add Workout"}</button>
+                <button id="searchWorkoutButton">Search</button>
+                </div>
+                
+            <button id="createWorkoutButton" onClick={() => setToggleAdd(!toggleAdd)}>{toggleAdd ? "Back to Workouts" : "Add Workout"}</button> 
+               </div>
+            
+            </div>
+            
             {toggleAdd ? 
             <CreateWorkout 
             workouts={workouts}

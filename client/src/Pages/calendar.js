@@ -1,4 +1,4 @@
-import React, { useState} from "react";
+import React, { useState, useEffect} from "react";
 import Calendar from 'react-calendar';
 import SelectedDayContainer from "../components/selectedDayContainer";
 import 'react-calendar/dist/Calendar.css';
@@ -8,12 +8,14 @@ function CalendarPage(){
 
     const onChange = (date) => {
         setDate(date)
-        console.log(date)
-        
     }
+
     return(
-        <div>
-            <Calendar onChange={onChange} value={date}/>
+        <div id="calendarCont">
+            <div>
+               <Calendar onChange={onChange} value={date}/> 
+            </div>
+            
             <SelectedDayContainer date={date}/>
         </div>
     )

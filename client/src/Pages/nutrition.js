@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NutrientsContainer from "../components/nutrientsContainer";
+import NutrientInfo from "../components/nutrientInfo";
 
 function Nutrition() {
     const [searchInput, setSearchInput] = useState("")
@@ -17,10 +17,16 @@ function Nutrition() {
                 setSearchResults(data)})
     }
 
+    const resultsListed = searchResults.map((nutrientInfo, index) => {
+        return <NutrientInfo key={index} nutrientInfo={nutrientInfo} />
+    })
+
     return (
-        <div>
-            <h1>Nutrition Search🍎</h1>
+        <div id="nutritionCont">
+            <div id="searchCont">
+               <h1>Nutrition Search🍎</h1>
             <input
+                id="searchNutritionInput"
                 type="text"
                 placeholder="1lb brisket"
                 value={searchInput}
@@ -28,8 +34,10 @@ function Nutrition() {
                     setSearchInput(e.target.value)
                 }}
             />
-            <button onClick={searchNutrients}>Search</button>
-            <NutrientsContainer searchResults={searchResults} />
+            <button id="searchNutritionButton" onClick={searchNutrients}>Search</button> 
+            </div>
+            
+            {resultsListed.length > 0 ? resultsListed : <h1 id="noSearchResultsText">Found Food Items Will Appear here</h1>}
         </div>
     )
 }

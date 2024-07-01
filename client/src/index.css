@@ -1,7 +1,306 @@
-:root {
-  --bg: #282c34;
-  --header: #fff;
-  --link: #61dafb;
-  --text: hsla(0, 0%, 100%, 0.88);
+body{
+  margin: 0;
+  background-color: rgb(214, 210, 210);
+}
+
+
+
+/*------ Navbar --------*/
+#nutrifitLogo{
+  width: 50px;
+  border-radius: 50%;
+}
+
+#navbarCont{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid black;
+  padding: 20px;
+  background-color: black;
+}
+
+#websiteNameLogoCont div, #websiteNameLogoCont{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#websiteNameLogoCont{
+  padding-right: 10px;
+  width: 30%;
+}
+
+#websiteName{
+  font-size: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+#userSearchBar{
+  width: 300px;
+}
+
+#navbarButtonsCont{
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navButtons{
+  text-decoration: none;
+  color: #fff;
+  font-size: 1.3rem;
+}
+
+.navButtons:hover{
+  text-decoration: none;
+}
+
+
+/*----- Login Signup -------*/
+#loginCont, #signupFormCont{
+  border: 1px solid black;
+  background-color: #fff;
+  width: 50%;
+  text-align: center;
+  margin: 40px auto 40px auto;
+  border-radius: 10px;
+}
+
+.loginCreateTitle{
+  padding: 20px;
+}
+
+.loginSignupEditForm{
+  text-align: left;
+  width: 70%;
+  margin: 0 auto;
+}
+
+.loginSignupEditForm > label {
+  display: block;
+  margin-top: 10px;
+  font-weight: 900;
+}
+
+.loginSignupEditForm > input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+}
+
+.loginSignupEditForm textarea{
+  width: 100%;
+}
+
+.loginSignupEditForm > button{
+  padding: 10px 20px;
+  background-color: #34571c;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.toggleLoginCreate{
+  color: rgb(24, 24, 245);
+}
+
+.toggleLoginCreate:hover{
+  cursor: pointer;
+}
+
+/*------- Landing Page ---------*/
+#welcomeText{
+  position: absolute;
+  top: 50%;
+  left: 30%;
+  color: #fff;
+  z-index: 1;
+}
+
+#welcomeText h1{
+  font-size: 4rem;
+}
+
+#linkToLogin{
+  background-color: white;
+  border-radius: 20px;
+  padding: 5px;
+}
+
+.carouselImages{
+  width: 100%;
+}
+
+.crousel-item{
+  opacity:0;
+  transition: opacity 1s !important;
+}
+.carousel-item.active{
+  opacity:1;
+  transition: opacity 1s !important;
+}
+
+/*----- Workouts Page --------*/
+#workoutPageCont{
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 80%;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+#searchWorkoutCont{
+  border-bottom: 4px solid black;
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+}
+#searchWorkoutCont div{
+  padding: 10px;
+}
+
+.workoutPageButtons{
+  background-color: #007bff;
+  border-radius: 20px;
+  padding: 10px 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#searchWorkoutButton, #searchNutritionButton{
+  background-color: #846c42;
+  border-radius: 0px 20px 20px 0px;
+  padding: 3px 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#searchWorkoutInput, #searchNutritionInput{
+  border-radius: 20px 0px 0px 20px;
+  width: 300px;
+}
+
+#createWorkoutButton{
+  background-color: #34571c;
+  border-radius: 20px;
+  padding: 3px 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+/*------ Workout Node ----------*/
+.workoutNodeCont{
+  border-bottom: 1px solid black;
+  width: 70%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+.workoutNodeCont div h2{
+  font-size: 0.7rem;
+}
+
+.workoutNodeCont div h3{
+  font-size: 1.5rem;
+}
+
+.addWorkoutButton{
+  display: flex;
+  align-items: center;
+}
+
+.showWorkoutDetails{
+  color: rgb(24, 24, 245);
+  width: 100px;
+  margin: 5px 0 0 0;
+}
+
+.showWorkoutDetails:hover{
+  cursor: pointer;
+}
+
+/*------ Nutrition ------*/
+#nutritionCont{
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 60%;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+#searchCont{
+  border-bottom: 4px solid black;
+  width: 70%;
+  margin: 0 auto;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+#nutritionResultsCont{
+  border: 1px solid black;
+  width: 40%;
+  margin: 20px auto;
+}
+
+#nutritionResultsCont div{
+  border-bottom: 2px solid black;
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+}
+
+#nutritionResultsCont p{
+  margin: 0;
+}
+
+#noSearchResultsText{
+  text-align: center;
+  padding: 20px;
+}
+
+/*------- Calendar --------*/
+#calendarCont{
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+#selectedDayCont{
+  width: 35%;
+  margin-left: 10px;
+  border-radius: 20px;
+}
+
+#selectedDate{
+  text-align: center;
+  padding-top: 15px;
+  border-bottom: 3px solid black;
+  width: 75%;
+  margin: 0 auto;
+}
+
+#addWorkoutCont{
+  margin-top: 15px;
+}
+
+
+#addWorkoutHeader{
+  text-align: center;
+}
+
+#addWorkoutToCalendarResultsCont{
+  max-height: 600px;
+  overflow: hidden;
+  overflow-y: auto;
 }
 
