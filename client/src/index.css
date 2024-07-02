@@ -1,6 +1,6 @@
 body{
   margin: 0;
-  background-color: rgb(214, 210, 210);
+  background-color: rgb(255, 255, 255);
 }
 
 
@@ -271,13 +271,19 @@ body{
 /*------- Calendar --------*/
 #calendarCont{
   display: flex;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 70%;
+  height: 80vh;
   justify-content: center;
-  margin-top: 20px;
+  margin: 20px auto;
+  padding-top: 20px;
+  background-color: white;
 }
 
 #selectedDayCont{
-  width: 35%;
-  margin-left: 10px;
+  width: 50%;
+  margin-left: 5px;
   border-radius: 20px;
 }
 
@@ -290,7 +296,8 @@ body{
 }
 
 #addWorkoutCont{
-  margin-top: 15px;
+  margin: 15px 0 0 15px;
+  max-height: 530px;
 }
 
 
@@ -300,12 +307,81 @@ body{
 }
 
 #addWorkoutToCalendarResultsCont{
-  max-height: 600px;
   overflow: hidden;
   overflow-y: auto;
+  max-height: 400px;
 }
 
 #searchInputAddToCalendar{
   border-radius: 20px 0px 0px 20px;
   width: 270px;
+}
+
+#toggleCalendarCont{
+  display: flex;
+  width: 250px;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding-top: 20px;
+}
+
+#viewWorkoutsOnCalendarCont{
+  overflow: hidden;
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+.toggleCalendarButton:hover{
+  cursor: pointer;
+  color: #007bff;
+}
+
+.toggleCalendarButtonActive{
+  color: #007bff;
+  text-decoration: underline;
+}
+
+/*-------- User Profile ------------*/
+#userProfileCont{
+  margin: 20px auto;
+  display: flex;
+  width: 90%;
+}
+
+#userInfoCont{
+  border: 1px solid black;
+  border-radius: 20px;
+  margin: 0 10px;
+  width: 30%;
+  text-align: center;
+}
+
+#userContentCont{
+  width: 70%;
+  border: 1px solid black;
+}
+
+#userProfilePhoto{
+  border-radius: 50%;
+  border: 1px solid black;
+  width: 200px;
+}
+
+#editProfileText{
+  text-align: center;
+  padding-top: 20px;
+}
+
+#editProfileFormContainer{
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 80%;
+  margin: 20px auto;
+}
+
+#goBackToProfile{
+  text-align: center;
+  padding-top: 20px;
+  color: #007bff;
+  cursor: pointer;
 }

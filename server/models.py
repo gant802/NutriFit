@@ -14,7 +14,7 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 
-    serialize_rules = ('-user_workouts', '-workouts')
+    serialize_rules = ('-user_workouts', '-workouts', '-workout_calendar_events')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable = False)

@@ -2,10 +2,12 @@ import React, { useContext, useState, useEffect } from "react";
 import { SignedInContext } from "../components/App";
 import { useNavigate, useParams } from "react-router-dom";
 import WorkoutNode from "../components/workoutNode";
+import UserInfo from "../components/userInfo";
 
 function UserProfile() {
     const [signedIn, setSignedIn] = useContext(SignedInContext)
     const [userWorkouts, setUserWorkouts] = useState([])
+    const [profileOfUser, setProfileOfUser] = useState({})
     const navigate = useNavigate()
     const { id } = useParams()
     let workoutsListed;
@@ -17,7 +19,14 @@ function UserProfile() {
                 res.json().then(data => setUserWorkouts(() => data))
             }
         }).catch(error => console.log(error))
-    }, [])
+
+        fetch(`/users/${id}`)
+        .then(res => {
+            if(res.ok){
+                res.json().then(data => setProfileOfUser(data))
+            } 
+        }).catch(error => console.log(error))
+    }, [id])
 
 
     //? Function to log user out
@@ -41,12 +50,9 @@ function UserProfile() {
     
 
     return (
-        <div>
-            <div id="userInfoCont">
-                <h1>User {signedIn.username} Profile page</h1>
-            <button onClick={logout}>Logout</button>
-            </div>
-            <div>
+        <div id="userProfileCont">
+            <UserInfo user={profileOfUser} logout={logout} signedInUser={signedIn}/>
+            <div id="userContentCont">
                 <h2>Workouts</h2>
                 {workoutsListed}
             </div>

@@ -12,6 +12,7 @@ import Nutrition from "./Pages/nutrition";
 import UserProfile from "./Pages/userProfile";
 import WorkoutsPage from "./Pages/workoutsPage";
 import LandingPage from "./Pages/landingPage";
+import EditProfile from "./components/editProfile";
 
 const routes = [
 {
@@ -49,6 +50,10 @@ children: [
     {
         path: '/home',
         element: <Home />
+    },
+    {
+        path: '/editProfile/:id',
+        element: <EditProfile />
     }
 ]
 }
