@@ -54,6 +54,10 @@ class UserWorkoutById(Resource):
 
 api.add_resource(UserWorkoutById, '/user_workout/<int:user_id>/<int:workout_id>')
 
+
+
+
+
 class Workouts(Resource):
     def get(self):
         workouts = Workout.query.all()
@@ -133,6 +137,22 @@ class WorkoutsCalendarEvent(Resource):
 api.add_resource(WorkoutsCalendarEvent, '/workouts_calendar_event')
 
 
+
+
+
+#? Athorization------------------------
+class SearchResultsMax(Resource):
+    def get(self):
+        if not session.get('user_id'):
+            session['search_results_viewed'] = 0 if not session.get('search_results_viewed') else session.get('search_results_viewed')
+            session['search_results_viewed'] += 1
+
+            if session['search_results_viewed'] <= 6:
+                return make_response({"message": "Good to keep browsing"}, 200) 
+
+            return {'message': 'Maximum searches limit reached'}, 401
+
+api.add_resource(SearchResultsMax, '/search_results_max')
 
 
 #? Authentication------------------------------

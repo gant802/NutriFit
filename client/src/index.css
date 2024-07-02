@@ -173,7 +173,7 @@ body{
   cursor: pointer;
 }
 
-#searchWorkoutButton, #searchNutritionButton{
+#searchWorkoutButton, #searchNutritionButton, #searchButtonAddToCalendar{
   background-color: #846c42;
   border-radius: 0px 20px 20px 0px;
   padding: 3px 10px;
@@ -296,6 +296,7 @@ body{
 
 #addWorkoutHeader{
   text-align: center;
+  padding: 20px;
 }
 
 #addWorkoutToCalendarResultsCont{
@@ -304,3 +305,7 @@ body{
   overflow-y: auto;
 }
 
+#searchInputAddToCalendar{
+  border-radius: 20px 0px 0px 20px;
+  width: 270px;
+}

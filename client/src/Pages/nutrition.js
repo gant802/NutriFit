@@ -1,21 +1,37 @@
 import React, { useState } from "react";
 import NutrientInfo from "../components/nutrientInfo";
+import { useOutletContext } from "react-router-dom";
 
 function Nutrition() {
     const [searchInput, setSearchInput] = useState("")
     const [searchResults, setSearchResults] = useState([])
+    const [setSearchMaxReached, searchMaxReached] = useOutletContext()
 
     function searchNutrients() {
-        console.log(searchInput)
-        fetch('https://api.api-ninjas.com/v1/nutrition?query=' + searchInput, {
+        fetch('/search_results_max')
+        .then(res => {
+            if (res.ok) {
+                res.json().then(data => {
+                    giveSearchResults()
+                })
+            } else {
+                setSearchMaxReached(true)
+                return alert("Please Login or Sign up to view more nutrition info")
+            }
+        })
+ }
+
+ function giveSearchResults(){
+    fetch('https://api.api-ninjas.com/v1/nutrition?query=' + searchInput, {
             method: 'GET',
             headers: { 'X-Api-Key': 'bMxQSkd43Sy3FQYD50efrg==XxNceF4LNlS0s0LS' },
             contentType: 'application/json'
         }).then(res => res.json())
             .then(data => {
-                console.log(data)
                 setSearchResults(data)})
-    }
+ }
+        
+   
 
     const resultsListed = searchResults.map((nutrientInfo, index) => {
         return <NutrientInfo key={index} nutrientInfo={nutrientInfo} />

@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import { SignedInContext } from "../components/App";
+import React, { useEffect, useState } from "react";
 import WorkoutsContainer from "../components/workoutsContainer";
 import CreateWorkout from "../components/createWorkout";
 
@@ -7,9 +6,7 @@ function WorkoutsPage(){
     const [workouts, setWorkouts] = useState([]);
     const [toggleAdd, setToggleAdd] = useState(false)
     const [searchInput, setSearchInput] = useState("")
-    const [signedIn] = useContext(SignedInContext)
 
-    console.log(searchInput)
 
     useEffect(() => {
         fetch('/workouts')

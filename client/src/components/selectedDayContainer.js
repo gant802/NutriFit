@@ -27,7 +27,10 @@ function SelectedDayContainer({date}){
         fetch(`/workouts_calendar_event?user_id=${signedIn.id}&date=${date.toString().substring(0, 15)}`)
         .then(res => {
             if(res.ok){
-                res.json().then(data => setWorkoutsOnDay(data))
+                res.json().then(data => {
+                    console.log(data)
+                    setWorkoutsOnDay(data)
+                })
             }
         })
     }, [date])

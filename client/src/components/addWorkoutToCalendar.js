@@ -22,8 +22,8 @@ function AddWorkoutToCalendar({ workouts, date, signedIn, workoutsOnDay, setWork
                 user_id: signedIn.id
             }),
         }).then(res => res.json())
-            .then(data => {
-                setWorkoutsOnDay([...workoutsOnDay, data]);
+            .then(resp => {
+                setWorkoutsOnDay(() => [...workoutsOnDay, data]);
             })
             .catch(error => console.log(error))
     }
@@ -36,13 +36,14 @@ function AddWorkoutToCalendar({ workouts, date, signedIn, workoutsOnDay, setWork
         return <WorkoutNode key={workout.id} workout={workout} calendarPage={calendarPage} addToCalendar={addWorkoutToCalendar} />
     })
 
-
+    
 
     return (
         <div id="addWorkoutCont">
             <div id="addWorkoutHeader">
                 <h2>Add workout</h2>
                 <input
+                id="searchInputAddToCalendar"
                     type="text"
                     placeholder="Search for workouts by name..."
                     value={searchInput}
@@ -50,7 +51,7 @@ function AddWorkoutToCalendar({ workouts, date, signedIn, workoutsOnDay, setWork
                         setSearchInput(e.target.value)
                     }}
                 />
-                <button>Search</button>
+                <button id="searchButtonAddToCalendar">Search</button>
             </div>
             <div id="addWorkoutToCalendarResultsCont">
                 {searchInput === "" ? "" : workoutsListed}
