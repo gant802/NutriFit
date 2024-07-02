@@ -28,7 +28,7 @@ function App() {
 
   return (
     <SignedInContext.Provider value={[signedIn, setSignedIn]}>
-      <div>
+      <div id="appCont">
         <Navbar />
         <Outlet context={[setSearchMaxReached, searchMaxReached]}/>
       </div>

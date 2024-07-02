@@ -8,6 +8,7 @@ function UserProfile() {
     const [signedIn, setSignedIn] = useContext(SignedInContext)
     const [userWorkouts, setUserWorkouts] = useState([])
     const [profileOfUser, setProfileOfUser] = useState({})
+    const [seeWorkouts, setSeeWorkouts] = useState(true)
     const navigate = useNavigate()
     const { id } = useParams()
     let workoutsListed;
@@ -53,8 +54,14 @@ function UserProfile() {
         <div id="userProfileCont">
             <UserInfo user={profileOfUser} logout={logout} signedInUser={signedIn}/>
             <div id="userContentCont">
-                <h2>Workouts</h2>
-                {workoutsListed}
+                <div id="userWorkoutsPostsTitleCont">
+                    <h2 className="userWorkoutsPostsTitle" onClick={() => setSeeWorkouts(true)}>Workouts</h2>
+                    <h2 className="userWorkoutsPostsTitle" onClick={() => setSeeWorkouts(false)}>Posts</h2>
+                </div>
+                <div id="userWorkoutsPostsCont">
+                  {seeWorkouts ? workoutsListed : <h1>Posts go here</h1>}  
+                </div>
+                
             </div>
         </div>
     )

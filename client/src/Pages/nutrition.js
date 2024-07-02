@@ -53,7 +53,7 @@ function Nutrition() {
             <button id="searchNutritionButton" onClick={searchNutrients}>Search</button> 
             </div>
             
-            {resultsListed.length > 0 ? resultsListed : <h1 id="noSearchResultsText">Found Food Items Will Appear here</h1>}
+            {resultsListed.length > 0 ? resultsListed : <h1 id="noSearchResultsText">Search by weight followed by the food!</h1>}
         </div>
     )
 }

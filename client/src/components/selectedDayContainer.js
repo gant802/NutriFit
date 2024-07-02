@@ -29,9 +29,11 @@ function SelectedDayContainer({ date }) {
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
-                        console.log(data)
-                        setWorkoutsOnDay(data)
+                        setWorkoutsOnDay(() => data)
+                        setToggleAddWorkout(false)
                     })
+                } else {
+                    setToggleAddWorkout(true)
                 }
             })
     }, [date])
