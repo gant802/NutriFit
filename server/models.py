@@ -14,7 +14,13 @@ class User(db.Model, SerializerMixin):
     def __repr__(self):
         return f"User('{self.username}', '{self.email}')"
 
-    serialize_rules = ('-user_workouts', '-workouts', '-workout_calendar_events')
+    serialize_rules = ('-user_workouts',
+                        '-workouts',
+                          '-workout_calendar_events',
+                            '-following',
+                              '-followers',
+                              '-posts',
+                              '-comments')
 
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String, unique=True, nullable = False)
@@ -29,6 +35,10 @@ class User(db.Model, SerializerMixin):
     user_workouts = db.relationship("UserWorkout", back_populates = "user")
     workouts = association_proxy("user_workouts", "workout")
     workout_calendar_events = db.relationship("WorkoutCalendarEvent", back_populates="user")
+    following = db.relationship('Follow', foreign_keys='Follow.follower_user_id', back_populates='follower', cascade='all, delete-orphan')
+    followers = db.relationship('Follow', foreign_keys='Follow.following_user_id', back_populates='following', cascade='all, delete-orphan')
+    posts = db.relationship('Post', back_populates='user', cascade='all, delete-orphan')
+    comments = db.relationship('Comment', back_populates='user', cascade='all, delete-orphan')
 
     #encrypts password
     @property
@@ -161,24 +171,109 @@ class WorkoutCalendarEvent(db.Model, SerializerMixin):
     user = db.relationship("User", back_populates="workout_calendar_events")
 
 
+        
+
+class Post(db.Model, SerializerMixin):
+    __tablename__ = 'posts'
+
+    serialize_rules = ("-comments.post",)
+
+    id = db.Column(db.Integer, primary_key=True)
+    content = db.Column(db.String, nullable=False)
+    created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    likes = db.Column(db.Integer, default=0)
+
+
+    #one post - one user
+    #one post - many comments
+    user = db.relationship('User', back_populates='posts')
+    comments = db.relationship('Comment', back_populates='post', cascade='all, delete-orphan')
+
+    @property
+    def username(self):
+        return self.user.username
+
+    @validates('content')
+    def validate_content(self, key, content):
+        if len(content) == 0:
+            raise ValueError("Content cannot be empty")
+        return content
+
+    @validates('user_id')
+    def validate_user_id(self, key, user_id):
+        if user_id is None:
+            raise ValueError("Post must contain user ID")
+        return user_id
 
 
 
+class Follow(db.Model, SerializerMixin):
+    __tablename__ = 'follows'
+
+    serialize_rules = ("-following.followers","-follower.following")
+
+    id = db.Column(db.Integer, primary_key=True)
+    created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
+     #person who is following
+    follower_user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    #person being followed
+    following_user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    following = db.relationship('User', foreign_keys=[following_user_id], back_populates='followers')
+    follower = db.relationship('User', foreign_keys=[follower_user_id], back_populates='following')
+
+    #makes sure user isn't following themselves or a relationship is duplicated
+    @validates('following_user_id', 'follower_user_id')
+    def validate_not_following_self(self, key, value):
+        if key == 'following_user_id':
+            following_user_id = value
+            follower_user_id = self.follower_user_id
+        else:
+            follower_user_id = value
+            following_user_id = self.following_user_id
+
+        if following_user_id is not None and follower_user_id is not None:
+            if following_user_id == follower_user_id:
+                raise ValueError("User cannot follow themselves")
+        
+
+        follow_exists = db.session.query(Follow).filter_by(
+                following_user_id=following_user_id,
+                follower_user_id=follower_user_id
+            ).first()
+            
+        if follow_exists:
+            raise ValueError("This follow relationship already exists")
+            
+
+        return value
+    
+class Comment(db.Model, SerializerMixin):
+    __tablename__ = 'comments'
+
+    serialize_rules = ("-post","-user.comments")
+
+    id = db.Column(db.Integer, primary_key=True)
+    comment = db.Column(db.String, nullable=False)
+    created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    #one comment - one post, one comment - one user
+    post = db.relationship("Post", back_populates="comments")
+    user = db.relationship("User", back_populates="comments")
 
 
-
-
-
-    # class Post(db.Model, SerializerMixin):
-    #     __tablename__ = 'posts'
-
-    #     # serialize_rules = ("-comments.post",)
-  
-    #     id = db.Column(db.Integer, primary_key=True)
-    #     content = db.Column(db.String, nullable=False)
-    #     created_at = db.Column(db.DateTime, default=func.now(), nullable=False)
-    #     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
-    #     likes = db.Column(db.Integer)
+    @property
+    def username(self):
+       return self.user.username
+    
+    @validates('comment')
+    def validate_comment(self, key, comment):
+        if len(comment) == 0:
+            raise ValueError("Comment cannot be empty")
+        return comment
 
         
 

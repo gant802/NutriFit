@@ -138,9 +138,16 @@ background-color: #fff;
 }
 
 #linkToLogin {
-  background-color: white;
+  background-color: #007bff;
+  color: #fff;
+  text-decoration: none;
   border-radius: 20px;
   padding: 5px;
+}
+
+#linkToLogin:hover{
+  background-color: #4d9ff6;
+  color: #fff;
 }
 
 .carouselImages {
@@ -161,7 +168,7 @@ background-color: #fff;
 #workoutPageCont {
   border: 1px solid black;
   border-radius: 20px;
-  width: 80%;
+  width: 40%;
   margin: 20px auto;
   padding: 20px;
 }
@@ -207,7 +214,7 @@ background-color: #fff;
 #searchWorkoutInput,
 #searchNutritionInput {
   border-radius: 20px 0px 0px 20px;
-  width: 300px;
+  width: 250px;
 }
 
 #createWorkoutButton {
@@ -283,7 +290,7 @@ background-color: #fff;
 #nutritionCont {
   border: 1px solid black;
   border-radius: 20px;
-  width: 60%;
+  width: 50%;
   margin: 20px auto;
   padding: 20px;
 }
@@ -427,7 +434,8 @@ background-color: #fff;
 }
 
 #userProfilePhoto {
-  border-radius: 50%;
+  border-radius: 100px;
+  max-height: 150px;
   border: 1px solid black;
   width: 150px;
 }

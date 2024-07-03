@@ -44,7 +44,7 @@ children: [
         element: <UserProfile/>
     },
     {
-        path: '/workoutsPage',
+        path: '/workoutsPage/:id',
         element: <WorkoutsPage />
     },
     {

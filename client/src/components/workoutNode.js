@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { SignedInContext } from "../components/App";
 
-function WorkoutNode({ workout, calendarPage, addToCalendar, signedIn, userWorkouts, setUserWorkouts }) {
+
+function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUserWorkouts }) {
     const [showDetails, setShowDetails] = useState(false);
     const [isAddedToProfile, setIsAddedToProfile] = useState(false)
+    const [signedIn] = useContext(SignedInContext)
 
     useEffect(() => {
         if (userWorkouts && userWorkouts.find(workoutFound => workoutFound.workout_id === workout.id)) {

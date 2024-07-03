@@ -1,13 +1,14 @@
-import React, {useContext, useEffect, useState} from "react";
+import React, { useEffect, useState} from "react";
 import WorkoutNode from "./workoutNode";
-import { SignedInContext } from "./App";
+import { useParams } from "react-router-dom";
 
 function WorkoutsContainer({workouts}){
-    const [signedIn] = useContext(SignedInContext);
     const [userWorkouts, setUserWorkouts] = useState([])
+    const {id} = useParams()
+    
 
     useEffect(() => {
-        fetch(`/user_workouts/${signedIn.id}`)
+        fetch(`/user_workouts/${id}`)
         .then(res => {
             if(res.ok){
                 res.json().then(data => setUserWorkouts(data))
@@ -17,7 +18,7 @@ function WorkoutsContainer({workouts}){
     
 
     const workoutsListed = workouts.map(workout => {
-        return <WorkoutNode userWorkouts={userWorkouts} signedIn={signedIn} key={workout.id} workout={workout}/>
+        return <WorkoutNode userWorkouts={userWorkouts} setUserWorkouts={setUserWorkouts} key={workout.id} workout={workout}/>
     })
 
     return(

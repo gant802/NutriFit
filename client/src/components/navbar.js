@@ -15,7 +15,7 @@ function Navbar() {
             </div>
             <div id="navbarButtonsCont">
                 <NavLink className="navButtons" to='/home'>Home</NavLink>
-                <NavLink className="navButtons" to='/workoutsPage'>Workouts</NavLink>
+                <NavLink className="navButtons" to={`/workoutsPage/${signedIn.id}`}>Workouts</NavLink>
                 <NavLink className="navButtons" to='/nutrition'>Nutrition</NavLink>
                 <NavLink className="navButtons" to={`/calendar/${signedIn.id}`}>Calendar</NavLink>
                 {signedIn ? <NavLink className="navButtons" to={`/userProfile/${signedIn.id}`}>My Profile</NavLink> : <NavLink className="navButtons" to='/loginOrCreate'>Login</NavLink>}
