@@ -8,7 +8,7 @@ from flask_restful import Resource
 
 # Local imports
 from config import app, db, api
-from models import User, Workout, UserWorkout, WorkoutCalendarEvent
+from models import User, Workout, UserWorkout, WorkoutCalendarEvent, Post, UserLikedPost
 # Add your model imports
 
 
@@ -176,6 +176,118 @@ class WorkoutsCalendarEvent(Resource):
 api.add_resource(WorkoutsCalendarEvent, '/workouts_calendar_event')
 
 
+
+
+
+
+
+class Posts(Resource):
+    def get(self):
+        posts = Post.query.all()
+        if posts:
+            posts = [post.to_dict() for post in posts]
+            return make_response(posts, 200)
+        else:
+            return make_response('Posts not found', 404)
+        
+    #creates a new post
+    def post(self):
+        try:
+            params = request.json
+            content = params.get('content')
+            user_id = params.get('user_id')
+            
+            if content is None or user_id is None:
+                raise ValueError("Missing 'content' or 'user_id' in the request data.")
+            
+            new_post = Post(
+                content=content,
+                user_id=user_id
+            )
+            db.session.add(new_post)
+            db.session.commit()
+            
+            return make_response(new_post.to_dict(), 201)
+        
+        except ValueError as v_error:
+            return make_response({'errors': [str(v_error)]}, 400)
+        
+        except Exception as e:
+            return make_response({'errors': ['An unexpected error occurred.']}, 500)
+        
+api.add_resource(Posts, '/posts')
+
+
+class PostsById(Resource):
+    def get(self, post_id):
+        post = Post.query.filter_by(id=post_id).first()
+        if post:
+            return make_response(post.to_dict(), 200)
+        else:
+            return make_response('Post not found', 404)
+        
+    def patch(self, post_id):
+        post = Post.query.filter(Post.id == post_id).first()
+        if not post:
+            return make_response({"error": "Post not found"}, 404)
+        
+        try:
+            params = request.json
+            for attr in params:
+                setattr(post, attr, params[attr])
+            db.session.add(post)
+            db.session.commit()
+
+            post_dict = post.to_dict()
+            return make_response(post_dict, 202)
+        
+        except ValueError as v_error:
+            return make_response({'errors': str(v_error)}, 400)
+        
+api.add_resource(PostsById, '/api/post/<int:post_id>')
+
+class PostsByUserId(Resource):
+    def get(self, user_id):
+        posts = Post.query.filter_by(user_id=user_id).all()
+        if posts:
+            posts = [post.to_dict() for post in posts]  
+            return make_response(posts, 200)
+        else:
+            return make_response('Posts not found', 404)
+        
+api.add_resource(PostsByUserId, "/posts/user/<int:user_id>")
+
+
+
+
+class LikedPost(Resource):
+    def get(self, user_id, liked_post_id):
+        isLiked = UserLikedPost.query.filter_by(liked_post_id=liked_post_id, user_id=user_id).first()
+        if isLiked:
+            return make_response(isLiked.to_dict(), 200)
+        else:
+            return make_response('Post not Liked', 404)
+        
+    def post(self, user_id, liked_post_id):
+        post = UserLikedPost.query.filter_by(liked_post_id=liked_post_id, user_id=user_id).first()
+        if post:
+            return make_response('Post already liked', 400)
+        else:
+            post = UserLikedPost(liked_post_id=liked_post_id, user_id=user_id)
+            db.session.add(post)
+            db.session.commit()
+            return make_response(post.to_dict(), 201)
+        
+    def delete(self, user_id, liked_post_id):
+        post = UserLikedPost.query.filter_by(liked_post_id=liked_post_id, user_id=user_id).first()
+        if post:
+            db.session.delete(post) 
+            db.session.commit()
+            return make_response('Post deleted', 200)
+        else:
+            return make_response('Post not found', 404)
+        
+api.add_resource(LikedPost, '/liked_post/<int:user_id>/<int:liked_post_id>')
 
 
 

@@ -8,16 +8,16 @@ from faker import Faker
 
 # Local imports
 from app import app
-from models import db, User, Workout, UserWorkout
+from models import db, User, Workout, UserWorkout, Post, Comment, UserLikedPost
 
 if __name__ == '__main__':
     fake = Faker()
     with app.app_context():
-        print("Deleting data...")
+        # print("Deleting data...")
         # User.query.delete()
         # Workout.query.delete()
         # UserWorkout.query.delete()
-
+        UserLikedPost.query.delete()
 
         # print("Starting seed...")
         
@@ -45,3 +45,17 @@ if __name__ == '__main__':
         # db.session.add_all([user_workout1, user_workout2, user_workout3])
         # db.session.commit()
 
+        # post1= Post(content="Working out is hard but fun", user_id=4)
+        # post2= Post(content="Biceps today!", user_id=4)
+        # post3= Post(content="Anyone down to hit a lift sesh?", user_id=4)
+
+
+        # db.session.add_all([post1, post2, post3])
+        # db.session.commit()
+
+        # comment1 = Comment(comment="Totally agree", user_id=6, post_id=2)
+        # comment2 = Comment(comment="I'm down", user_id=6, post_id=4)
+        # comment3 = Comment(comment="Lets hit triceps tomorrow?", user_id=6, post_id=3)
+
+        # db.session.add_all([comment1, comment2, comment3])
+        # db.session.commit()

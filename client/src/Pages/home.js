@@ -1,9 +1,14 @@
-import React from "react";
+import React, {useState} from "react";
+import PostsContainer from "../components/postsContainer";
+import CreatePost from "../components/createPost";
 
 function Home(){
+    const [posts, setPosts] = useState([]);
+
     return(
         <div>
-            <h1>Welcome to my home page!</h1>
+            <CreatePost setPosts={setPosts} posts={posts}/>
+            <PostsContainer posts={posts} setPosts={setPosts} />
         </div>
     )
 }

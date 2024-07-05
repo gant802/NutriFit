@@ -176,7 +176,7 @@ class WorkoutCalendarEvent(db.Model, SerializerMixin):
 class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
 
-    serialize_rules = ("-comments.post",)
+    serialize_rules = ("-comments.post", "-user.posts")
 
     id = db.Column(db.Integer, primary_key=True)
     content = db.Column(db.String, nullable=False)
@@ -252,7 +252,7 @@ class Follow(db.Model, SerializerMixin):
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
-    serialize_rules = ("-post","-user.comments")
+    serialize_rules = ("-post",)
 
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String, nullable=False)
@@ -276,5 +276,9 @@ class Comment(db.Model, SerializerMixin):
         return comment
 
         
+class UserLikedPost(db.Model, SerializerMixin):
+    __tablename__ = 'user_liked_posts'
 
-
+    id = db.Column(db.Integer, primary_key=True)
+    liked_post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)

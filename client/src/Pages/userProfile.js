@@ -3,10 +3,12 @@ import { SignedInContext } from "../components/App";
 import { useNavigate, useParams } from "react-router-dom";
 import WorkoutNode from "../components/workoutNode";
 import UserInfo from "../components/userInfo";
+import PostsContainer from "../components/postsContainer";
 
 function UserProfile() {
     const [signedIn, setSignedIn] = useContext(SignedInContext)
     const [userWorkouts, setUserWorkouts] = useState([])
+    const [posts, setPosts] = useState([])
     const [profileOfUser, setProfileOfUser] = useState({})
     const [seeWorkouts, setSeeWorkouts] = useState(true)
     const navigate = useNavigate()
@@ -26,6 +28,13 @@ function UserProfile() {
             if(res.ok){
                 res.json().then(data => setProfileOfUser(data))
             } 
+        }).catch(error => console.log(error))
+
+        fetch(`/posts/user/${id}`)
+        .then(res => {
+            if(res.ok){
+                res.json().then(data => setPosts(data))
+            }
         }).catch(error => console.log(error))
     }, [id])
 
@@ -59,7 +68,7 @@ function UserProfile() {
                     <h2 className="userWorkoutsPostsTitle" onClick={() => setSeeWorkouts(false)}>Posts</h2>
                 </div>
                 <div id="userWorkoutsPostsCont">
-                  {seeWorkouts ? workoutsListed : <h1>Posts go here</h1>}  
+                  {seeWorkouts ? workoutsListed : <PostsContainer posts={posts} setPosts={setPosts} />}  
                 </div>
                 
             </div>
