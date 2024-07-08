@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useContext } from "react";
 import { SignedInContext } from "./App";
+import { Link } from "react-router-dom";
 
 function Post({ post }) {
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(post.likes)
     const [signedIn] = useContext(SignedInContext)
+    console.log(post.likes)
+    
 
     useEffect(() => {
         fetch(`/liked_post/${signedIn.id}/${post.id}`)
@@ -24,15 +27,11 @@ function Post({ post }) {
                 method: "DELETE"
             }).then(resp => setIsLiked(false))
     
-            let newLikeCount = post.likes - 1;
-            fetch(`/api/post/${post.id}`, {
+            fetch(`/api/post_unliked/${post.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    likes: newLikeCount
-                })
+                }
             }).then(resp => {
                 if (resp.ok) {
                     resp.json().then(data => data);
@@ -57,15 +56,11 @@ function Post({ post }) {
                 }
             })
     
-            let newLikeCount = post.likes + 1;
-            fetch(`/api/post/${post.id}`, {
+            fetch(`/api/post_liked/${post.id}`, {
                 method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    likes: newLikeCount
-                })
+                }
             }).then(resp => {
                 if (resp.ok) {
                     resp.json().then(data => data);
@@ -77,7 +72,7 @@ function Post({ post }) {
 
     return (
         <div className="singlePostCont">
-            <p>{post.user.username}</p>
+            <Link to={`/userProfile/${post.user.id}`}>{post.user.username}</Link>
             <p>{post.content}</p>
             {isLiked
                 ? <p onClick={() => likeUnlikePost()}>❤️{likes}</p>

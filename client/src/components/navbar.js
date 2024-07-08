@@ -1,9 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { SignedInContext } from "./App";
+import UserNode from "./userNode";
 
 function Navbar() {
     const [signedIn] = useContext(SignedInContext);
+    const [allUsers, setAllUsers] = useState([])
+    const [searchInput, setSearchInput] = useState("")
+
+    useEffect(() => {
+        fetch('/users')
+        .then(res => res.json())
+        .then(data => setAllUsers(data))
+    }, [])
+
+    const usersFound = allUsers.map(user => {
+        if (user.username.toLowerCase().includes(searchInput.toLowerCase())) {
+            return <UserNode key={user.id} user={user} setSearchInput={setSearchInput}/>
+        }
+    })
+
+    console.log(searchInput)
+    
+
     return (
         <div id="navbarCont">
             <div id="websiteNameLogoCont">
@@ -11,7 +30,13 @@ function Navbar() {
                     <NavLink id="websiteName" to="/">NutriFit</NavLink>
                     <img id="nutrifitLogo" src={process.env.PUBLIC_URL + '/45075620.jpg'} alt="nutrifit logo" />
                 </div>
-                <input id="userSearchBar"placeholder="Search Users..." />
+                <div id="searchUsersCont">
+                    <input value={searchInput} onChange={(e) => setSearchInput(e.target.value)} id="userSearchBar"placeholder="Search Users..." />
+                    <div id="userResultsCont">
+                        {searchInput ? usersFound : ""}
+                    </div>
+                </div>
+                
             </div>
             <div id="navbarButtonsCont">
                 <NavLink className="navButtons" to='/home'>Home</NavLink>

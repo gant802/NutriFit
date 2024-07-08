@@ -17,7 +17,8 @@ if __name__ == '__main__':
         # User.query.delete()
         # Workout.query.delete()
         # UserWorkout.query.delete()
-        UserLikedPost.query.delete()
+        # UserLikedPost.query.delete()
+        # Post.query.delete()
 
         # print("Starting seed...")
         

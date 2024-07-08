@@ -1,9 +1,15 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import PostsContainer from "../components/postsContainer";
 import CreatePost from "../components/createPost";
 
 function Home(){
     const [posts, setPosts] = useState([]);
+
+    useEffect(() => {
+        fetch('/posts')
+        .then(res => res.json())
+        .then(data => setPosts(data))
+    }, [])
 
     return(
         <div>

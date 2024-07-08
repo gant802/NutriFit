@@ -246,6 +246,32 @@ class PostsById(Resource):
         
 api.add_resource(PostsById, '/api/post/<int:post_id>')
 
+class AddLikeToPost(Resource):
+    def patch(self, post_id):
+        post = Post.query.filter_by(id=post_id).first()
+        if not post:
+            return make_response({"error": "Post not found"}, 404)
+        if post:
+            post.likes += 1
+            db.session.add(post)
+            db.session.commit()
+            return make_response(post.to_dict(), 202)
+                   
+api.add_resource(AddLikeToPost, '/api/post_liked/<int:post_id>')
+
+class SubtractLikeToPost(Resource):
+    def patch(self, post_id):
+        post = Post.query.filter_by(id=post_id).first()
+        if not post:
+            return make_response({"error": "Post not found"}, 404)
+        if post:
+            post.likes -= 1
+            db.session.add(post)
+            db.session.commit()
+            return make_response(post.to_dict(), 202)
+                   
+api.add_resource(SubtractLikeToPost, '/api/post_unliked/<int:post_id>')
+
 class PostsByUserId(Resource):
     def get(self, user_id):
         posts = Post.query.filter_by(user_id=user_id).all()

@@ -14,7 +14,7 @@ function UserInfo({logout, user, signedInUser}){
                 <img id="userProfilePhoto" src={user.image_url} alt="profile image"/>
                 <p id="userFullNameText">{user.first_name} {user.last_name}</p>
                 <p id="userUsernameText">@{user.username}</p>
-                {user.id === signedInUser.id ? <button id="logoutButton" onClick={logout}>Logout</button> : <button>Follow</button>}
+                {user.id === signedInUser.id ? <button id="logoutButton" onClick={logout}>Logout</button> : <button id="followButton">Follow</button>}
                 {user.id === signedInUser.id ? <button id="editProfileButton" onClick={goToEditProfile}>Edit Profile</button> : null}
             </div>
             <div id="userInfoLower">
