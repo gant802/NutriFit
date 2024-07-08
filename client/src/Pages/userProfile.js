@@ -11,6 +11,8 @@ function UserProfile() {
     const [posts, setPosts] = useState([])
     const [profileOfUser, setProfileOfUser] = useState({})
     const [seeWorkouts, setSeeWorkouts] = useState(true)
+    const [userFollowing, setUserFollowing] = useState([])
+    const [isFollowing, setIsFollowing] = useState(false)
     const navigate = useNavigate()
     const { id } = useParams()
     let workoutsListed;
@@ -38,6 +40,22 @@ function UserProfile() {
         }).catch(error => console.log(error))
     }, [id])
 
+    useEffect(() => {
+        fetch('/following')
+        .then(res => {
+            if(res.ok){
+                res.json().then(data => {
+                    setUserFollowing(() => data)
+                    userFollowing.map(followRel => {
+                        if(followRel.id == id){
+                            setIsFollowing(true)
+                        }
+                    })
+                })
+            }
+        })
+    }, [])
+    
 
     //? Function to log user out
     function logout() {
@@ -61,7 +79,7 @@ function UserProfile() {
 
     return (
         <div id="userProfileCont">
-            <UserInfo user={profileOfUser} logout={logout} signedInUser={signedIn}/>
+            <UserInfo user={profileOfUser} logout={logout} signedInUser={signedIn} isFollowing={isFollowing} setIsFollowing={setIsFollowing} />
             <div id="userContentCont">
                 <div id="userWorkoutsPostsTitleCont">
                     <h2 className="userWorkoutsPostsTitle" onClick={() => setSeeWorkouts(true)}>Workouts</h2>

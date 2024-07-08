@@ -6,8 +6,7 @@ function Post({ post }) {
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(post.likes)
     const [signedIn] = useContext(SignedInContext)
-    console.log(post.likes)
-    
+
 
     useEffect(() => {
         fetch(`/liked_post/${signedIn.id}/${post.id}`)
@@ -22,11 +21,11 @@ function Post({ post }) {
         if (isLiked) {
             // First, update the like count in the state
             setLikes(prevLikes => prevLikes - 1);
-    
+
             fetch(`/liked_post/${signedIn.id}/${post.id}`, {
                 method: "DELETE"
             }).then(resp => setIsLiked(false))
-    
+
             fetch(`/api/post_unliked/${post.id}`, {
                 method: 'PATCH',
                 headers: {
@@ -40,7 +39,7 @@ function Post({ post }) {
         } else {
             // First, update the like count in the state
             setLikes(prevLikes => prevLikes + 1);
-    
+
             fetch(`/liked_post/${signedIn.id}/${post.id}`, {
                 method: "POST",
                 headers: {
@@ -55,7 +54,7 @@ function Post({ post }) {
                     setIsLiked(true)
                 }
             })
-    
+
             fetch(`/api/post_liked/${post.id}`, {
                 method: 'PATCH',
                 headers: {
@@ -69,14 +68,29 @@ function Post({ post }) {
         }
     }
 
+    const formattedCreatedAt = post.created_at.slice(0, 11)
+
 
     return (
         <div className="singlePostCont">
-            <Link to={`/userProfile/${post.user.id}`}>{post.user.username}</Link>
-            <p>{post.content}</p>
-            {isLiked
-                ? <p onClick={() => likeUnlikePost()}>❤️{likes}</p>
-                : <p onClick={() => likeUnlikePost()}>🤍{likes}</p>}
+            <img src={post.user.image_url} className="profilePostImage" alt="profilePostImg" />
+            <div className="postTextCont">
+                <div className="postTextTop">
+                    <Link to={`/userProfile/${post.user.id}`}>@{post.user.username}</Link>
+                    <p>{formattedCreatedAt}</p>
+                </div>
+                <div className="postTextMiddle">
+                    <p>{post.content}</p>
+                </div>
+                <div className="postTextBottom">{isLiked
+                    ? <p className="likeButton" onClick={() => likeUnlikePost()}>❤️{likes}</p>
+                    : <p className="likeButton" onClick={() => likeUnlikePost()}>🤍{likes}</p>}
+                    <p>See Comments</p></div>
+
+
+
+            </div>
+
         </div>
     )
 }

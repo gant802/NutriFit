@@ -8,6 +8,8 @@ function CreatePost({ setPosts, posts }) {
 
     //? Function to handle creating a post that persists
     function handlePostSubmit(values) {
+        console.log(values)
+        
         fetch('/posts', {
             method: 'POST',
             headers: {
@@ -16,7 +18,7 @@ function CreatePost({ setPosts, posts }) {
             body: JSON.stringify(values)
         }).then(resp => {
             if (resp.ok) {
-                resp.json().then(data => setPosts([data, ...posts]))
+                resp.json().then(data => setPosts([...posts, data]))
             }
         }).catch(error => console.log(error))
     }
@@ -27,9 +29,10 @@ function CreatePost({ setPosts, posts }) {
     })
 
     return (
-        <div id="createPostContainer">
-            <h2>What's on your mind?</h2>
-
+        <div id="createPostCont">
+            <img id="createPostPhoto" src={signedIn.image_url} alt="profile-photo"/>
+            <div>
+                <h2>What's on your mind?</h2>
             <Formik
                 initialValues={{
                     content: "",
@@ -43,12 +46,14 @@ function CreatePost({ setPosts, posts }) {
                     return (<form id="createPostForm" onSubmit={handleSubmit}>
                         <textarea id="postInput" onChange={handleChange} value={content}
                             type="text" name="content" placeholder="Who wants to get a lift in?..." />
-                        <div>
+                            
                             <button id="createPostButton" type="submit">Create Post</button>
-                        </div>
+                    
                     </form>)
                 }}
             </Formik>
+            </div>
+            
             
         </div>
     )

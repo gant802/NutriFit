@@ -8,7 +8,7 @@ from flask_restful import Resource
 
 # Local imports
 from config import app, db, api
-from models import User, Workout, UserWorkout, WorkoutCalendarEvent, Post, UserLikedPost
+from models import User, Workout, UserWorkout, WorkoutCalendarEvent, Post, UserLikedPost, Follow
 # Add your model imports
 
 
@@ -195,7 +195,7 @@ class Posts(Resource):
         try:
             params = request.json
             content = params.get('content')
-            user_id = params.get('user_id')
+            user_id = session['user_id']
             
             if content is None or user_id is None:
                 raise ValueError("Missing 'content' or 'user_id' in the request data.")
@@ -286,6 +286,8 @@ api.add_resource(PostsByUserId, "/posts/user/<int:user_id>")
 
 
 
+
+
 class LikedPost(Resource):
     def get(self, user_id, liked_post_id):
         isLiked = UserLikedPost.query.filter_by(liked_post_id=liked_post_id, user_id=user_id).first()
@@ -314,6 +316,51 @@ class LikedPost(Resource):
             return make_response('Post not found', 404)
         
 api.add_resource(LikedPost, '/liked_post/<int:user_id>/<int:liked_post_id>')
+
+
+
+class Following(Resource):
+    #returns all users that the user is following
+    def get(self):
+        following = Follow.query.filter_by(follower_user_id = session['user_id']).all()
+        following_row_list = [follow.to_dict(rules=('-follower','-following')) for follow in following]
+        following_list = [User.query.get(following["following_user_id"]).to_dict() for following in following_row_list]
+        return make_response(following_list, 200)
+    
+    #creates a new following relationship
+    def post(self):
+        try:
+            params = request.json
+            new_follow = Follow(
+                following_user_id = params.get('user_id'),
+                follower_user_id = session['user_id']
+            )
+            db.session.add(new_follow)
+            db.session.commit()
+            return make_response(new_follow.to_dict(), 201)
+        except ValueError as v_error:
+            return make_response({'errors': [str(v_error)]}, 400)
+    
+        
+api.add_resource(Following, '/following')
+
+#deletes a following relationship
+class Unfollow(Resource):
+    def delete(self, id):
+        follow = Follow.query.filter_by(following_user_id=id, follower_user_id=session['user_id']).first()
+        
+        if not follow:
+            response = {"error": "User is not following or the relationship does not exist"}
+            return make_response(response, 404)
+
+        db.session.delete(follow)
+        db.session.commit()
+        
+        return '', 204
+
+api.add_resource(Unfollow, '/unfollow/<int:id>')
+
+
 
 
 

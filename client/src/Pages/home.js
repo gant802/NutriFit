@@ -12,7 +12,7 @@ function Home(){
     }, [])
 
     return(
-        <div>
+        <div id="homeCont">
             <CreatePost setPosts={setPosts} posts={posts}/>
             <PostsContainer posts={posts} setPosts={setPosts} />
         </div>

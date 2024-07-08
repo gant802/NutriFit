@@ -20,7 +20,6 @@ function Navbar() {
         }
     })
 
-    console.log(searchInput)
     
 
     return (

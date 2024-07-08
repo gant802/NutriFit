@@ -10,8 +10,8 @@ function PostsContainer({setPosts, posts}){
     
 
     return(
-        <div>
-            {postsListed}
+        <div id="allPostsCont">
+            {postsListed.reverse()}
         </div>
     )
 }
