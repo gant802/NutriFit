@@ -5,6 +5,8 @@ import { Outlet } from "react-router-dom";
 export const SignedInContext = React.createContext()
 
 function App() {
+
+
   const [signedIn, setSignedIn] = useState(false)
   const [searchMaxReached, setSearchMaxReached] = useState(false)
 
@@ -16,7 +18,7 @@ function App() {
         }
       })
 
-      fetch('search_results_max')
+    fetch('search_results_max')
       .then(resp => {
         if (resp.ok) {
           resp.json().then(data => "")
@@ -30,7 +32,7 @@ function App() {
     <SignedInContext.Provider value={[signedIn, setSignedIn]}>
       <div id="appCont">
         <Navbar />
-        <Outlet context={[setSearchMaxReached, searchMaxReached]}/>
+        <Outlet context={[setSearchMaxReached, searchMaxReached]} />
       </div>
     </SignedInContext.Provider>
   )

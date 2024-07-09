@@ -6,14 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 
 function LoginForm({ switchPage, setSwitchPage }) {
-    const [signedIn, setSignedIn] = useContext(SignedInContext)
+    const [setSignedIn] = useContext(SignedInContext)
     const [error, setError] = useState("")
     const navigate = useNavigate()
 
 
     //? Function to handle a user loggin in
     function handleLogin(values) {
-        console.log(values)
         fetch('/login', {
             method: 'POST',
             headers: {
@@ -37,6 +36,7 @@ function LoginForm({ switchPage, setSwitchPage }) {
             });
     }
 
+    // Validate user input when signing in
     let loginSchema = yup.object().shape({
         username: yup.string().required(),
         password: yup.string().required(),
@@ -56,7 +56,7 @@ function LoginForm({ switchPage, setSwitchPage }) {
                 validationSchema={loginSchema}
                 onSubmit={handleLogin}>
                 {(props) => {
-                    const { values: { username, password, password_confirmation }, handleChange, handleSubmit, errors } = props
+                    const { values: { username, password, password_confirmation }, handleChange, handleSubmit } = props
                     return (
                         <form className="loginSignupEditForm" onSubmit={handleSubmit}>
                             <label htmlFor="username">Username: </label>

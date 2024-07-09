@@ -31,10 +31,10 @@ function CreateProfile({ switchPage, setSwitchPage }) {
                         setError(error)
                     })
                 }
-            })
-            .catch(error => {
+            }).catch(error => {
                 console.log(error);
-            });
+                alert('An error occurred while fetching data. Please try again later.');
+            })
     }
 
     // Schema to validate user input for signing up
@@ -53,6 +53,7 @@ function CreateProfile({ switchPage, setSwitchPage }) {
 
     return (
         <div id="signupFormCont">
+
             <h2 className="loginCreateTitle">Create Profile</h2>
 
             <Formik
@@ -136,9 +137,11 @@ function CreateProfile({ switchPage, setSwitchPage }) {
                     </form>)
                 }}
             </Formik>
+
             {switchPage ? <p className="loginCreateErrorText">{error.error}</p> : ""}
 
             <p className="toggleLoginCreate" onClick={() => setSwitchPage(!switchPage)}>Back to Login</p>
+            
         </div>
     )
 }

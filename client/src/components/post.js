@@ -11,6 +11,7 @@ function Post({ post }) {
     const [comments, setComments] = useState([])
 
 
+    // Checks if the signed in user liked the post and sets the comments for the post
     useEffect(() => {
         fetch(`/liked_post/${signedIn.id}/${post.id}`)
             .then(res => {
@@ -18,18 +19,20 @@ function Post({ post }) {
                     setIsLiked(true)
                 }
             })
-        
+
         fetch(`/comments/${post.id}`)
-        .then(res => {
-            if (res.ok) {
-                res.json().then(data => setComments(data))
-            }
-        })
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(data => setComments(data))
+                }
+            })
     }, [])
 
+    //? Logic to  like and unlike a post
     function likeUnlikePost() {
+
+        //!For unliking a post
         if (isLiked) {
-            // First, update the like count in the state
             setLikes(prevLikes => prevLikes - 1);
 
             fetch(`/liked_post/${signedIn.id}/${post.id}`, {
@@ -46,8 +49,11 @@ function Post({ post }) {
                     resp.json().then(data => data);
                 }
             });
-        } else {
-            // First, update the like count in the state
+        }
+
+        //! For liking a post
+        else {
+
             setLikes(prevLikes => prevLikes + 1);
 
             fetch(`/liked_post/${signedIn.id}/${post.id}`, {
@@ -83,30 +89,31 @@ function Post({ post }) {
 
     return (
         <>
-        <div className="singlePostCont">
-            <img src={post.user.image_url} className="profilePostImage" alt="profilePostImg" />
-            <div className="postTextCont">
-                <div className="postTextTop">
-                    <Link to={`/userProfile/${post.user.id}`}>@{post.user.username}</Link>
-                    <p>{formattedCreatedAt}</p>
+            <div className="singlePostCont">
+
+                <img src={post.user.image_url} className="profilePostImage" alt="profilePostImg" />
+                <div className="postTextCont">
+                    <div className="postTextTop">
+                        <Link to={`/userProfile/${post.user.id}`}>@{post.user.username}</Link>
+                        <p>{formattedCreatedAt}</p>
+                    </div>
+                    <div className="postTextMiddle">
+                        <p>{post.content}</p>
+                    </div>
+                    <div className="postTextBottom">
+                        {isLiked
+                            ? <p className="likeButton" onClick={() => likeUnlikePost()}>❤️{likes}</p>
+                            : <p className="likeButton" onClick={() => likeUnlikePost()}>🤍{likes}</p>}
+                        <p className="toggleCommentsClick" onClick={() => setToggleComments(!toggleComments)}>{toggleComments ? "Hide Comments" : "Show Comments"}</p>
+                    </div>
                 </div>
-                <div className="postTextMiddle">
-                    <p>{post.content}</p>
-                </div>
-                <div className="postTextBottom">
-                    {isLiked
-                    ? <p className="likeButton" onClick={() => likeUnlikePost()}>❤️{likes}</p>
-                    : <p className="likeButton" onClick={() => likeUnlikePost()}>🤍{likes}</p>}
-                    <p className="toggleCommentsClick" onClick={() => setToggleComments(!toggleComments)}>{toggleComments ? "Hide Comments" : "Show Comments"}</p>
-                </div>
-                  
+
             </div>
-                  
-        </div>
-        {toggleComments ? <CommentContainer post={post} comments={comments} setComments={setComments} signedIn={signedIn} /> :  null}
-        <div className="lineBreak"></div>
+
+            {toggleComments ? <CommentContainer post={post} comments={comments} setComments={setComments} /> : null}
+            <div className="lineBreak"></div>
         </>
-        
+
     )
 }
 

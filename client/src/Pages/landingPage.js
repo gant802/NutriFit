@@ -8,10 +8,10 @@ function LandingPage() {
 
     return (
         <div id="carouselCont">
+
             <div id="welcomeText">
                 <h1>{signedIn ? "Welcome back!" : "Welcome!"}</h1>
                 {signedIn ? "" : <Link id="linkToLogin" to="/loginOrCreate">Login or Signup</Link>}
-
             </div>
 
             <Carousel fade={true} interval={5000}>
@@ -34,6 +34,7 @@ function LandingPage() {
                     </Carousel.Caption>
                 </Carousel.Item>
             </Carousel>
+            
         </div>
     );
 }

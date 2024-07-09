@@ -8,12 +8,15 @@ function Navbar() {
     const [allUsers, setAllUsers] = useState([])
     const [searchInput, setSearchInput] = useState("")
 
+
+    // Gets all users from backend
     useEffect(() => {
         fetch('/users')
         .then(res => res.json())
         .then(data => setAllUsers(data))
     }, [])
 
+    // Found users that match the search input
     const usersFound = allUsers.map(user => {
         if (user.username.toLowerCase().includes(searchInput.toLowerCase())) {
             return <UserNode key={user.id} user={user} setSearchInput={setSearchInput}/>
@@ -24,6 +27,7 @@ function Navbar() {
 
     return (
         <div id="navbarCont">
+
             <div id="websiteNameLogoCont">
                 <div>
                     <NavLink id="websiteName" to="/">NutriFit</NavLink>
@@ -35,8 +39,8 @@ function Navbar() {
                         {searchInput ? usersFound : ""}
                     </div>
                 </div>
-                
             </div>
+            
             <div id="navbarButtonsCont">
                 <NavLink className="navButtons" to='/home'>Home</NavLink>
                 <NavLink className="navButtons" to={`/workoutsPage/${signedIn.id}`}>Workouts</NavLink>
@@ -44,7 +48,6 @@ function Navbar() {
                 <NavLink className="navButtons" to={`/calendar/${signedIn.id}`}>Calendar</NavLink>
                 {signedIn ? <NavLink className="navButtons" to={`/userProfile/${signedIn.id}`}>My Profile</NavLink> : <NavLink className="navButtons" to='/loginOrCreate'>Login</NavLink>}
             </div>
-
 
         </div>
     )

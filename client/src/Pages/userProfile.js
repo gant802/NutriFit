@@ -11,12 +11,12 @@ function UserProfile() {
     const [posts, setPosts] = useState([])
     const [profileOfUser, setProfileOfUser] = useState({})
     const [seeWorkouts, setSeeWorkouts] = useState(true)
-    const [userFollowing, setUserFollowing] = useState([])
     const [isFollowing, setIsFollowing] = useState(false)
     const navigate = useNavigate()
     const { id } = useParams()
     let workoutsListed;
 
+    // Retreives user info, workouts and posts by the user on the profile the page is on depending on the params id
     useEffect(() => {
         fetch(`/user_workouts/${id}`)
             .then(res => {
@@ -40,12 +40,12 @@ function UserProfile() {
             }).catch(error => console.log(error))
     }, [id])
 
+    // Checks if the user is following the user on the profile page
     useEffect(() => {
         fetch('/following')
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
-                        setUserFollowing(() => data)
                         const isUserFollowing = data.some(followRel => followRel.id == id);
                         setIsFollowing(isUserFollowing);
                     })
@@ -66,6 +66,7 @@ function UserProfile() {
         })
     }
 
+    // Lists out the user's workouts that the web page is on
     if (userWorkouts) {
         workoutsListed = userWorkouts.map(workout => {
             return <WorkoutNode signedIn={signedIn} key={workout.id} workout={workout.workout} setUserWorkouts={setUserWorkouts} userWorkouts={userWorkouts} />
@@ -76,7 +77,9 @@ function UserProfile() {
 
     return (
         <div id="userProfileCont">
+
             <UserInfo user={profileOfUser} logout={logout} signedInUser={signedIn} isFollowing={isFollowing} setIsFollowing={setIsFollowing} />
+            
             <div id="userContentCont">
                 <div id="userWorkoutsPostsTitleCont">
                     <h2 className="userWorkoutsPostsTitle" onClick={() => setSeeWorkouts(true)}>Workouts</h2>
@@ -85,8 +88,8 @@ function UserProfile() {
                 <div id="userWorkoutsPostsCont">
                     {seeWorkouts ? workoutsListed : <PostsContainer posts={posts} setPosts={setPosts} />}
                 </div>
-
             </div>
+
         </div>
     )
 }

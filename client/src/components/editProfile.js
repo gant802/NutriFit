@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Formik } from "formik";
 import * as yup from 'yup'
 import { SignedInContext } from "../components/App";
@@ -9,8 +9,7 @@ function EditProfile() {
     const navigate = useNavigate()
     const [error, setError] = useState({})
 
-    console.log(signedIn)
-
+    //? Function to handle edit profile form submission
     function handleEditSubmit(values) {
         const valuesCopy = Object.assign({}, values);
         delete valuesCopy["password_confirmation"]
@@ -20,8 +19,7 @@ function EditProfile() {
         if (valuesCopy.username === signedIn.username) {
             delete valuesCopy["username"]
         }
-        
-        console.log(valuesCopy)
+    
         fetch(`/users/${signedIn.id}`, {
             method: 'PATCH',
             headers: {
@@ -35,9 +33,13 @@ function EditProfile() {
                     navigate(`/userProfile/${signedIn.id}`)
                 })
             } 
-        }).catch(errors => setError(errors))
+        }).catch(error => {
+            console.log(error);
+            setError(error)
+        })
     }
 
+    //Schema to validate edit profile form data
     let editProfileSchema = yup.object().shape({
         first_name: yup.string().max(20, 'First name too Long!').required(),
         last_name: yup.string().max(20, 'Last name too Long!').required(),
@@ -50,6 +52,7 @@ function EditProfile() {
         favorite_workout: yup.string().max(30, 'Favorite Workout Too Long!')
     })
 
+    //? Function to handle deleting profile
     function handleDeleteProfile(){
         fetch(`/users/${signedIn.id}`, {
             method: 'DELETE'
@@ -61,6 +64,7 @@ function EditProfile() {
         })
     }
 
+    //? Navigates back  to user profile page
     function goBackToProfile(){
         navigate(`/userProfile/${signedIn.id}`)
     }
@@ -69,6 +73,7 @@ function EditProfile() {
 
     return (
         <div id="editProfileFormContainer">
+
             <h1 id="editProfileText">Edit Profile</h1>
             <Formik
                 initialValues={{
@@ -155,6 +160,7 @@ function EditProfile() {
                     </form>)
                 }}
             </Formik>
+
             <p id="goBackToProfile" onClick={goBackToProfile}>Go back to my profile</p>
         </div>
     )

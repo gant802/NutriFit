@@ -1,16 +1,17 @@
 import React from "react";
 
-function NutrientInfo({nutrientInfo}){
-    console.log(nutrientInfo)
+function NutrientInfo({ nutrientInfo }) {
 
+    //? Capitalizes the first letter in each word for a sentence
     function capitalize(sentence) {
-        return sentence.replace(/\b\w/g, function(char) {
+        return sentence.replace(/\b\w/g, function (char) {
             return char.toUpperCase();
         });
     }
 
-    return(
+    return (
         <div id="nutritionResultsCont">
+
             <h2>{capitalize(nutrientInfo.name)}</h2>
             <div><p className="bold">Serving Size: </p><span className="bold">{nutrientInfo.serving_size_g}g</span></div>
             <div><p>Calories: </p><span>{nutrientInfo.calories}</span></div>
@@ -23,7 +24,6 @@ function NutrientInfo({nutrientInfo}){
             <div><p>Sugar: </p><span>{nutrientInfo.sugar_g}g</span></div>
             <div><p className="bold">Protein: </p><span className="bold">{nutrientInfo.protein_g}g</span></div>
             <div><p>Potassium: </p><span>{nutrientInfo.potassium_mg}mg</span></div>
-    
 
         </div>
     )

@@ -7,6 +7,7 @@ function AddWorkoutToCalendar({ workouts, date, signedIn, workoutsOnDay, setWork
     const [calendarPage, setCalendarPage] = useState(true);
 
 
+    //? Adds workout to the calendar for a specific day
     function addWorkoutToCalendar(data) {
         if (!signedIn) {
             return alert("Please sign in to add a workout to your calendar");
@@ -25,25 +26,32 @@ function AddWorkoutToCalendar({ workouts, date, signedIn, workoutsOnDay, setWork
             .then(resp => {
                 setWorkoutsOnDay(() => [...workoutsOnDay, data]);
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error);
+                alert('An error occurred while fetching data. Please try again later.');
+            })
     }
 
+
+    //Filter workouts based on search input
     const filteredWorkouts = workouts.filter(workout => {
         return workout.name.toLowerCase().includes(searchInput.toLowerCase())
     })
 
+    //Render the filtered workouts immediatly to the page
     const workoutsListed = filteredWorkouts.map(workout => {
         return <WorkoutNode key={workout.id} workout={workout} calendarPage={calendarPage} addToCalendar={addWorkoutToCalendar} />
     })
 
-    
+
 
     return (
         <div id="addWorkoutCont">
+            
             <div id="addWorkoutHeader">
                 <h2>Add workout</h2>
                 <input
-                id="searchInputAddToCalendar"
+                    id="searchInputAddToCalendar"
                     type="text"
                     placeholder="Search for workouts by name..."
                     value={searchInput}

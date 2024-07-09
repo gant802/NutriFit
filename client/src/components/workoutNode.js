@@ -8,24 +8,27 @@ function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUs
     const [isAddedToCalendar, setIsAddedToCalendar] = useState(false)
     const [signedIn] = useContext(SignedInContext)
 
+    //Checks if the workout is added to the user's profile or not
     useEffect(() => {
         if (userWorkouts && userWorkouts.find(workoutFound => workoutFound.workout_id === workout.id)) {
             setIsAddedToProfile(true)
         }
     }, [])
 
-
+    //? Logic to add a workout to the calendar
     function handleAddToCalendar() {
         addToCalendar(workout)
         setIsAddedToCalendar(true)
     }
 
+    //? Logic to add a workout to the user's profile
     function handleAddToProfile() {
+
+        //! Checks if a user is signed in or not
         if (!signedIn) {
             return alert("You must be signed in to add workouts to your profile.")
         }
         if (!isAddedToProfile) {
-            console.log(workout.id)
             fetch(`/user_workouts/${signedIn.id}`, {
                 method: "POST",
                 headers: {
@@ -61,6 +64,7 @@ function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUs
 
     return (
         <div className="workoutNodeCont">
+
             <div className="workoutNodeDetailsOuter">
                 <h2 className="showWorkoutDetails" onClick={() => setShowDetails(!showDetails)}>{showDetails ? "Close Details" : "Show Details"}</h2>
                 {!showDetails ? <h3>{workout.name}</h3> :
@@ -80,11 +84,11 @@ function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUs
                         </div>
                     </div>}
             </div>
+            
             <div className="addWorkoutButton">
-                {calendarPage ?
-                    <button className="workoutPageButtons" onClick={handleAddToCalendar}>{isAddedToCalendar ? "Added To Calendar!" : "Add To Calendar"}</button> :
-                    <button className="workoutPageButtons" onClick={handleAddToProfile}>{isAddedToProfile ? "Remove From Profile" : "Add to Profile"}</button>}
-
+                {calendarPage
+                    ? <button className="workoutPageButtons" onClick={handleAddToCalendar}>{isAddedToCalendar ? "Added To Calendar!" : "Add To Calendar"}</button>
+                    : <button className="workoutPageButtons" onClick={handleAddToProfile}>{isAddedToProfile ? "Remove From Profile" : "Add to Profile"}</button>}
             </div>
 
         </div>

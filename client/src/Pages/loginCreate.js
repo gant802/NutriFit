@@ -7,9 +7,11 @@ function LoginOrCreate() {
 
     return (
         <div id="loginCreateCont">
-            {switchPage ?
-                <CreateProfile switchPage={switchPage} setSwitchPage={setSwitchPage} /> :
-                <LoginForm switchPage={switchPage} setSwitchPage={setSwitchPage} />}
+
+            {switchPage 
+            ? <CreateProfile switchPage={switchPage} setSwitchPage={setSwitchPage} /> 
+            : <LoginForm switchPage={switchPage} setSwitchPage={setSwitchPage} />}
+            
         </div>
     )
 }

@@ -1,11 +1,11 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Formik } from "formik";
 import * as yup from 'yup'
 
-function CreateWorkout({workouts, setWorkouts, toggleAdd, setToggleAdd}) {
-    const [errors, setErrors] = useState({})
+function CreateWorkout({ workouts, setWorkouts, toggleAdd, setToggleAdd }) {
 
 
+    //? Function to handle creating a workout
     function handleCreateSubmit(values) {
         fetch('/workouts', {
             method: 'POST',
@@ -20,24 +20,29 @@ function CreateWorkout({workouts, setWorkouts, toggleAdd, setToggleAdd}) {
                     setToggleAdd(!toggleAdd)
                 })
             }
-        }).catch(error => setErrors({"error": error}))
+        }).catch(error => {
+            console.log(error);
+            alert('An error occurred while fetching data. Please try again later.');
+        })
     }
 
-
+    //Schema to validate new workout submission
     let createWorkoutSchema = yup.object().shape({
         name: yup.string().max(50, 'Character limit reached!').required(),
         force: yup.string().max(50, 'Character limit reached!').required(),
         level: yup.string().required(),
         mechanic: yup.string().required(),
         equipment: yup.string().max(50, 'Character limit reached!').required(),
-        primaryMuscles: yup.string().max(70, 'Character limit reached!').required(),
-        secondaryMuscles: yup.string().max(70, 'Character limit reached!').required(),
+        primaryMuscles: yup.string().max(70, 'Character limit reached!'),
+        secondaryMuscles: yup.string().max(70, 'Character limit reached!'),
         instructions: yup.string().max(3500, 'Character limit reached!').required(),
-        category: yup.string().max(50, 'Character limit reached!').required()
+        category: yup.string().max(50, 'Character limit reached!')
     })
 
     return (
         <div id="createWorkoutCont">
+
+            <p>required*</p>
 
             <Formik
                 initialValues={{
@@ -66,15 +71,15 @@ function CreateWorkout({workouts, setWorkouts, toggleAdd, setToggleAdd}) {
                         instructions,
                         category }, handleChange, handleSubmit, errors } = props
                     return (<form id="createWorkoutForm" onSubmit={handleSubmit}>
-                        <label>Workout Name: </label>
+                        <label>*Workout Name: </label>
                         <input onChange={handleChange} value={name}
                             type="text" name="name" placeholder="bench press" />
 
-                        <label>Force: </label>
+                        <label>*Force: </label>
                         <input onChange={handleChange} value={force}
                             type="text" name="force" placeholder="push" />
 
-                        <label>Level: </label>
+                        <label>*Level: </label>
                         <select onChange={handleChange} value={level} name="level">
                             <option value="" >Select</option>
                             <option value="beginner">Beginner</option>
@@ -82,7 +87,7 @@ function CreateWorkout({workouts, setWorkouts, toggleAdd, setToggleAdd}) {
                             <option value="expert">Expert</option>
                         </select>
 
-                        <label>Mechanic: </label>
+                        <label>*Mechanic: </label>
                         <select onChange={handleChange} value={mechanic} name="mechanic">
                             <option value="" >Select</option>
                             <option value="compound">Compound</option>
@@ -90,7 +95,7 @@ function CreateWorkout({workouts, setWorkouts, toggleAdd, setToggleAdd}) {
                             <option value="none">None</option>
                         </select>
 
-                        <label>Equipment: </label>
+                        <label>*Equipment: </label>
                         <input onChange={handleChange} value={equipment}
                             type="text" name="equipment" placeholder="dumbells" />
 
@@ -102,14 +107,13 @@ function CreateWorkout({workouts, setWorkouts, toggleAdd, setToggleAdd}) {
                         <input onChange={handleChange} value={secondaryMuscles}
                             type="text" name="secondaryMuscles" placeholder="biceps, traps" />
 
-                        <label>Instructions: </label>
+                        <label>*Instructions: </label>
                         <textarea onChange={handleChange} value={instructions}
                             type="text" name="instructions" placeholder="Lie flat on a bench with your feet planted firmly on the ground..." />
 
                         <label>Category: </label>
                         <input onChange={handleChange} value={category}
                             type="text" name="category" placeholder="strength" />
-
 
                         <button id="createWorkoutButton" type="submit">Create Workout</button>
                     </form>)

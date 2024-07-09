@@ -13,7 +13,7 @@ export const UsePagination = ({
     currentPage
 }) => {
     const DOTS = "..."; // Constant for ellipsis indicating skipped pages
-    
+
     // Memoized function to calculate pagination range based on dependencies
     const paginationRange = useMemo(() => {
         // Calculate the total number of pages

@@ -22,6 +22,7 @@ function WorkoutsContainer({ workouts }) {
         pageSize * currentPage
     )
 
+    // Sets the workouts that are on the user's profile
     useEffect(() => {
         fetch(`/user_workouts/${id}`)
             .then(res => {
@@ -32,18 +33,20 @@ function WorkoutsContainer({ workouts }) {
     }, [])
 
 
+    // Lists the workouts for the current page you are on
     const workoutsListed = workoutsSlice.map(workout => {
         return <WorkoutNode userWorkouts={userWorkouts} setUserWorkouts={setUserWorkouts} key={workout.id} workout={workout} />
     })
 
     return (
         <div>
+            
             <div id="workoutsListCont">
                 {workoutsListed}
             </div>
 
             <div className="pagination">
-            {pagination.map((pageNumber, index) => {
+                {pagination.map((pageNumber, index) => {
                     if (pageNumber === "...") {
                         return <span key={index}>...</span>;
                     }
@@ -59,6 +62,7 @@ function WorkoutsContainer({ workouts }) {
                     );
                 })}
             </div>
+
         </div>
 
 

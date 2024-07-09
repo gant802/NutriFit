@@ -191,7 +191,8 @@ background-color: #fff;
   margin-top: 5px;
 }
 
-.loginSignupEditForm textarea {
+.loginSignupEditForm textarea,
+#createWorkoutForm textarea {
   width: 100%;
 }
 
@@ -276,6 +277,13 @@ background-color: #fff;
   width: 90%;
   margin: 0 auto;
   text-align: center;
+}
+
+#createWorkoutCont p{
+  width: 70%;
+  margin: 0 auto;
+  text-align: left;
+  padding: 20px 0;
 }
 
 #searchWorkoutCont div {

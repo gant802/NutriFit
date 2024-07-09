@@ -3,10 +3,11 @@ import CommentNode from "./commentNode";
 import { Formik } from "formik";
 import * as yup from 'yup';
 
-function CommentContainer({comments, setComments, signedIn, post}){
+function CommentContainer({ comments, setComments, post }) {
 
 
-    function handlePostComment(values){
+    //? Allows user to post a comment
+    function handlePostComment(values) {
         fetch(`/comments/${post.id}`, {
             method: "POST",
             headers: {
@@ -14,12 +15,16 @@ function CommentContainer({comments, setComments, signedIn, post}){
             },
             body: JSON.stringify(values)
         }).then(res => {
-            if(res.ok){
+            if (res.ok) {
                 res.json().then(data => setComments([...comments, data]))
             }
-        }).catch(error => console.log(error))
+        }).catch(error => {
+            console.log(error);
+            alert('An error occurred while fetching data. Please try again later.');
+        })
     }
 
+    // Renders comments to be oriented correctly
     const commentsListed = comments.map(comment => {
         return <CommentNode key={comment.id} comment={comment} />
     })
@@ -29,8 +34,9 @@ function CommentContainer({comments, setComments, signedIn, post}){
         comment: yup.string().max(100, 'Character limit reached!').required("Comment can't be blank!")
     })
 
-    return(
+    return (
         <div className="allCommentsContainer">
+
             <div className="newCommentFormCont">
                 <Formik
                     initialValues={{
@@ -52,9 +58,11 @@ function CommentContainer({comments, setComments, signedIn, post}){
                     }}
                 </Formik>
             </div>
-             <div className="commentsListedCont">
+
+            <div className="commentsListedCont">
                 {commentsListed}
-             </div>
+            </div>
+
         </div>
     )
 }
