@@ -252,7 +252,7 @@ class Follow(db.Model, SerializerMixin):
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
-    serialize_rules = ("-post",)
+    serialize_rules = ("-post", '-user.comments')
 
     id = db.Column(db.Integer, primary_key=True)
     comment = db.Column(db.String, nullable=False)

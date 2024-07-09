@@ -1,8 +1,31 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 function UserInfo({logout, user, signedInUser, isFollowing, setIsFollowing}){
     const navigate = useNavigate();
+    const [userFollowingList, setUserFollowingList] = useState([])
+    const [userFollowersList, setUserFollowersList] = useState([])
+    const { id } = useParams()
+
+    useEffect(() => {
+        fetch(`/following/${id}`)
+        .then(res => {
+            if(res.ok){
+                res.json().then(data => setUserFollowingList(data))
+            } else {
+                setUserFollowingList([])
+            }
+        })
+
+        fetch(`/followers/${id}`)
+        .then(res => {
+            if(res.ok){
+                res.json().then(data => setUserFollowersList(data))
+            } else {
+                setUserFollowersList([])
+            }
+        })
+    }, [id])
 
     function goToEditProfile(){
         navigate(`/editprofile/${signedInUser.id}`);
@@ -36,7 +59,7 @@ function UserInfo({logout, user, signedInUser, isFollowing, setIsFollowing}){
 
         }
     }
-
+    
 
     return(
         <div id="userInfoCont">
@@ -55,11 +78,11 @@ function UserInfo({logout, user, signedInUser, isFollowing, setIsFollowing}){
                 <div id="userFollowCont">
                     <div>
                         <p>Followers</p>
-                        <p className="followNum">0</p>
+                        <p className="followNum">{userFollowersList.length}</p>
                     </div>
                     <div>
                         <p>Following</p>
-                        <p className="followNum">0</p>
+                        <p className="followNum">{userFollowingList.length}</p>
                     </div>
                 </div>
                 <div id="bioFavWorkoutCont">

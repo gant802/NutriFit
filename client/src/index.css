@@ -11,6 +11,49 @@ body {
 background-color: #fff;
 }
 
+.workoutPageButtons,
+#logoutButton,
+#editProfileButton,
+#saveChangesDeleteContainer button,
+#followButton {
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 0.7rem;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#searchWorkoutButton,
+#searchNutritionButton,
+#searchButtonAddToCalendar {
+  background-color: #846c42;
+  border-radius: 0px 20px 20px 0px;
+  padding: 3px 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+#searchWorkoutInput,
+#searchNutritionInput {
+  border-radius: 20px 0px 0px 20px;
+  width: 250px;
+}
+
+#createWorkoutButton,
+#createPostButton,
+.addCommentButton {
+  background-color: #34571c;
+  border-radius: 20px;
+  padding: 3px 10px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+
+
 
 /*------ Navbar --------*/
 #nutrifitLogo {
@@ -107,6 +150,12 @@ background-color: #fff;
   border-radius: 100px;
 }
 
+
+
+
+
+
+
 /*----- Login Signup -------*/
 #loginCont,
 #signupFormCont {
@@ -163,6 +212,11 @@ background-color: #fff;
   cursor: pointer;
 }
 
+
+
+
+
+
 /*------- Landing Page ---------*/
 #welcomeText {
   position: absolute;
@@ -203,6 +257,11 @@ background-color: #fff;
   transition: opacity 1s !important;
 }
 
+
+
+
+
+
 /*----- Workouts Page --------*/
 #workoutPageCont {
   border: 1px solid black;
@@ -223,48 +282,41 @@ background-color: #fff;
   padding: 10px;
 }
 
-.workoutPageButtons,
-#logoutButton,
-#editProfileButton,
-#saveChangesDeleteContainer button,
-#followButton {
-  border-radius: 20px;
-  padding: 5px 10px;
-  font-size: 0.7rem;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
 .workoutPageButtons {
   background-color: #007bff;
 }
 
-#searchWorkoutButton,
-#searchNutritionButton,
-#searchButtonAddToCalendar {
-  background-color: #846c42;
-  border-radius: 0px 20px 20px 0px;
-  padding: 3px 10px;
-  color: #fff;
-  border: none;
-  cursor: pointer;
+.workoutNodeDetailsOuter {
+  padding: 10px;
 }
 
-#searchWorkoutInput,
-#searchNutritionInput {
-  border-radius: 20px 0px 0px 20px;
-  width: 250px;
+.pagination{
+  width: max-content;
+  margin: 0 auto;
+  padding: 5px;
+  font-size: 1.5rem;
 }
 
-#createWorkoutButton, #createPostButton {
+.pageButton{
+  margin: 0 5px;
   background-color: #34571c;
-  border-radius: 20px;
-  padding: 3px 10px;
+  border-radius: 5px;
   color: #fff;
   border: none;
   cursor: pointer;
 }
+
+.disabledButton{
+  background-color: #a3c28f;
+  margin: 0 5px;
+  border-radius: 5px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+
+
 
 /*------ Workout Node ----------*/
 .workoutNodeCont {
@@ -324,9 +376,9 @@ background-color: #fff;
   padding-top: 5px;
 }
 
-.workoutNodeDetailsOuter {
-  padding: 10px;
-}
+
+
+
 
 /*------ Nutrition ------*/
 #nutritionCont {
@@ -371,6 +423,11 @@ background-color: #fff;
 .bold {
   font-weight: bold;
 }
+
+
+
+
+
 
 /*------- Calendar --------*/
 #calendarCont {
@@ -444,6 +501,10 @@ background-color: #fff;
   color: #007bff;
   text-decoration: underline;
 }
+
+
+
+
 
 /*-------- User Profile ------------*/
 #userProfileCont {
@@ -573,6 +634,10 @@ background-color: #fff;
   overflow-y: auto;
 }
 
+
+
+
+
 /*---------- Home ------------*/
 
 #homeCont{
@@ -614,7 +679,6 @@ width: 100%;
 .singlePostCont{
   display: flex;
   align-items: center;
-  border-bottom: 2px solid black;
   padding: 15px 0;
 }
 
@@ -643,4 +707,40 @@ width: 100%;
 
 .likeButton{
   cursor: pointer;
+}
+
+
+
+
+/*--------- Comments -------------*/
+.allCommentsContainer{
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
+  width: 90%;
+}
+
+.commentsListedCont{
+  margin-left: 15px;
+  width: 80%;
+}
+
+.commentUsernameCont{
+  display: flex;
+  font-size: 0.9rem;
+}
+
+.commentUsernameCont p{
+  margin: 0 0 0 5px;
+}
+
+.lineBreak{
+  border-bottom: 2px solid black;
+  margin: 3px 0;
+}
+
+.toggleCommentsClick{
+  cursor: pointer;
+  color: #007bff;
+  font-size: 0.9rem;
 }

@@ -5,6 +5,7 @@ import { SignedInContext } from "../components/App";
 function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUserWorkouts }) {
     const [showDetails, setShowDetails] = useState(false);
     const [isAddedToProfile, setIsAddedToProfile] = useState(false)
+    const [isAddedToCalendar, setIsAddedToCalendar] = useState(false)
     const [signedIn] = useContext(SignedInContext)
 
     useEffect(() => {
@@ -16,6 +17,7 @@ function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUs
 
     function handleAddToCalendar() {
         addToCalendar(workout)
+        setIsAddedToCalendar(true)
     }
 
     function handleAddToProfile() {
@@ -80,7 +82,7 @@ function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUs
             </div>
             <div className="addWorkoutButton">
                 {calendarPage ?
-                    <button className="workoutPageButtons" onClick={handleAddToCalendar}>Add to Calendar</button> :
+                    <button className="workoutPageButtons" onClick={handleAddToCalendar}>{isAddedToCalendar ? "Added To Calendar!" : "Add To Calendar"}</button> :
                     <button className="workoutPageButtons" onClick={handleAddToProfile}>{isAddedToProfile ? "Remove From Profile" : "Add to Profile"}</button>}
 
             </div>

@@ -19,43 +19,40 @@ function UserProfile() {
 
     useEffect(() => {
         fetch(`/user_workouts/${id}`)
-        .then(res => {
-            if(res.ok){
-                res.json().then(data => setUserWorkouts(() => data))
-            }
-        }).catch(error => console.log(error))
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(data => setUserWorkouts(() => data))
+                }
+            }).catch(error => console.log(error))
 
         fetch(`/users/${id}`)
-        .then(res => {
-            if(res.ok){
-                res.json().then(data => setProfileOfUser(data))
-            } 
-        }).catch(error => console.log(error))
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(data => setProfileOfUser(data))
+                }
+            }).catch(error => console.log(error))
 
         fetch(`/posts/user/${id}`)
-        .then(res => {
-            if(res.ok){
-                res.json().then(data => setPosts(data))
-            }
-        }).catch(error => console.log(error))
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(data => setPosts(data))
+                }
+            }).catch(error => console.log(error))
     }, [id])
 
     useEffect(() => {
         fetch('/following')
-        .then(res => {
-            if(res.ok){
-                res.json().then(data => {
-                    setUserFollowing(() => data)
-                    userFollowing.map(followRel => {
-                        if(followRel.id == id){
-                            setIsFollowing(true)
-                        }
+            .then(res => {
+                if (res.ok) {
+                    res.json().then(data => {
+                        setUserFollowing(() => data)
+                        const isUserFollowing = data.some(followRel => followRel.id == id);
+                        setIsFollowing(isUserFollowing);
                     })
-                })
-            }
-        })
+                }
+            })
     }, [])
-    
+
 
     //? Function to log user out
     function logout() {
@@ -71,11 +68,11 @@ function UserProfile() {
 
     if (userWorkouts) {
         workoutsListed = userWorkouts.map(workout => {
-        return <WorkoutNode signedIn={signedIn} key={workout.id} workout={workout.workout} setUserWorkouts={setUserWorkouts} userWorkouts={userWorkouts}/>
-    })
+            return <WorkoutNode signedIn={signedIn} key={workout.id} workout={workout.workout} setUserWorkouts={setUserWorkouts} userWorkouts={userWorkouts} />
+        })
     }
 
-    
+
 
     return (
         <div id="userProfileCont">
@@ -86,9 +83,9 @@ function UserProfile() {
                     <h2 className="userWorkoutsPostsTitle" onClick={() => setSeeWorkouts(false)}>Posts</h2>
                 </div>
                 <div id="userWorkoutsPostsCont">
-                  {seeWorkouts ? workoutsListed : <PostsContainer posts={posts} setPosts={setPosts} />}  
+                    {seeWorkouts ? workoutsListed : <PostsContainer posts={posts} setPosts={setPosts} />}
                 </div>
-                
+
             </div>
         </div>
     )

@@ -1,11 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { SignedInContext } from "./App";
 import { Link } from "react-router-dom";
+import CommentContainer from "./commentContainer";
 
 function Post({ post }) {
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(post.likes)
     const [signedIn] = useContext(SignedInContext)
+    const [toggleComments, setToggleComments] = useState(false)
+    const [comments, setComments] = useState([])
 
 
     useEffect(() => {
@@ -15,6 +18,13 @@ function Post({ post }) {
                     setIsLiked(true)
                 }
             })
+        
+        fetch(`/comments/${post.id}`)
+        .then(res => {
+            if (res.ok) {
+                res.json().then(data => setComments(data))
+            }
+        })
     }, [])
 
     function likeUnlikePost() {
@@ -72,6 +82,7 @@ function Post({ post }) {
 
 
     return (
+        <>
         <div className="singlePostCont">
             <img src={post.user.image_url} className="profilePostImage" alt="profilePostImg" />
             <div className="postTextCont">
@@ -82,16 +93,20 @@ function Post({ post }) {
                 <div className="postTextMiddle">
                     <p>{post.content}</p>
                 </div>
-                <div className="postTextBottom">{isLiked
+                <div className="postTextBottom">
+                    {isLiked
                     ? <p className="likeButton" onClick={() => likeUnlikePost()}>❤️{likes}</p>
                     : <p className="likeButton" onClick={() => likeUnlikePost()}>🤍{likes}</p>}
-                    <p>See Comments</p></div>
-
-
-
+                    <p className="toggleCommentsClick" onClick={() => setToggleComments(!toggleComments)}>{toggleComments ? "Hide Comments" : "Show Comments"}</p>
+                </div>
+                  
             </div>
-
+                  
         </div>
+        {toggleComments ? <CommentContainer post={post} comments={comments} setComments={setComments} signedIn={signedIn} /> :  null}
+        <div className="lineBreak"></div>
+        </>
+        
     )
 }
 

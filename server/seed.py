@@ -19,6 +19,7 @@ if __name__ == '__main__':
         # UserWorkout.query.delete()
         # UserLikedPost.query.delete()
         # Post.query.delete()
+        Comment.query.delete()
 
         # print("Starting seed...")
         
@@ -54,9 +55,9 @@ if __name__ == '__main__':
         # db.session.add_all([post1, post2, post3])
         # db.session.commit()
 
-        # comment1 = Comment(comment="Totally agree", user_id=6, post_id=2)
-        # comment2 = Comment(comment="I'm down", user_id=6, post_id=4)
-        # comment3 = Comment(comment="Lets hit triceps tomorrow?", user_id=6, post_id=3)
+        comment1 = Comment(comment="Totally agree", user_id=6, post_id=2)
+        comment2 = Comment(comment="I'm down", user_id=6, post_id=4)
+        comment3 = Comment(comment="Lets hit triceps tomorrow?", user_id=6, post_id=3)
 
-        # db.session.add_all([comment1, comment2, comment3])
-        # db.session.commit()
+        db.session.add_all([comment1, comment2, comment3])
+        db.session.commit()

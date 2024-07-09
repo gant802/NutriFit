@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Post from "./post";
 
-function PostsContainer({setPosts, posts}){
+function PostsContainer({posts}){
 
 
     const postsListed = posts.map(post => {

@@ -8,7 +8,7 @@ from flask_restful import Resource
 
 # Local imports
 from config import app, db, api
-from models import User, Workout, UserWorkout, WorkoutCalendarEvent, Post, UserLikedPost, Follow
+from models import User, Workout, UserWorkout, WorkoutCalendarEvent, Post, UserLikedPost, Follow, Comment
 # Add your model imports
 
 
@@ -285,6 +285,31 @@ api.add_resource(PostsByUserId, "/posts/user/<int:user_id>")
 
 
 
+class CommentsByPostId(Resource):
+    def get(self, post_id):
+        comments = Comment.query.filter_by(post_id=post_id).all()
+        if comments:
+            comments = [comment.to_dict() for comment in comments]
+            return make_response(comments, 200)
+        else:
+            return make_response('Comments not found', 404)
+        
+    def post(self, post_id):
+        try:
+            params = request.json
+            new_comment = Comment(
+                comment = params.get('comment'),
+                post_id = post_id,
+                user_id = session['user_id']
+            )
+            db.session.add(new_comment)
+            db.session.commit()
+            return make_response(new_comment.to_dict(), 201)
+        except ValueError as v_error:
+            return make_response({'errors': [str(v_error)]}, 400)
+
+api.add_resource(CommentsByPostId, '/comments/<int:post_id>')
+
 
 
 
@@ -323,9 +348,12 @@ class Following(Resource):
     #returns all users that the user is following
     def get(self):
         following = Follow.query.filter_by(follower_user_id = session['user_id']).all()
-        following_row_list = [follow.to_dict(rules=('-follower','-following')) for follow in following]
-        following_list = [User.query.get(following["following_user_id"]).to_dict() for following in following_row_list]
-        return make_response(following_list, 200)
+        if following:
+            following_row_list = [follow.to_dict(rules=('-follower','-following')) for follow in following]
+            following_list = [User.query.get(following["following_user_id"]).to_dict() for following in following_row_list]
+            return make_response(following_list, 200)
+        else:
+            return make_response('No following', 404)
     
     #creates a new following relationship
     def post(self):
@@ -343,6 +371,30 @@ class Following(Resource):
     
         
 api.add_resource(Following, '/following')
+
+class FollowingByUserId(Resource):
+    def get(self, user_id):
+        following = Follow.query.filter_by(follower_user_id = user_id).all()
+        if following:
+            following_row_list = [follow.to_dict(rules=('-follower','-following')) for follow in following]
+            following_list = [User.query.get(following["following_user_id"]).to_dict() for following in following_row_list]
+            return make_response(following_list, 200)
+        else:
+            return make_response('No following', 404)
+    
+api.add_resource(FollowingByUserId, '/following/<int:user_id>')
+
+class FollowersByUserId(Resource):
+    def get(self, user_id):
+        followers = Follow.query.filter_by(following_user_id = user_id).all()
+        if followers:
+            followers_row_list = [follower.to_dict(rules=('-follower','-following')) for follower in followers]
+            followers_list = [User.query.get(follower["follower_user_id"]).to_dict() for follower in followers_row_list]
+            return make_response(followers_list, 200)
+        else:
+            return make_response('No followers', 404)
+    
+api.add_resource(FollowersByUserId, '/followers/<int:user_id>')
 
 #deletes a following relationship
 class Unfollow(Resource):
