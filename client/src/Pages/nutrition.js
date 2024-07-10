@@ -7,6 +7,7 @@ function Nutrition() {
     const [searchResults, setSearchResults] = useState([])
     const [setSearchMaxReached] = useOutletContext()
 
+
     //? Logic to handle if a user has searched nutrients over 6 times without signing in
     function searchNutrients() {
         fetch('/search_results_max')
@@ -26,7 +27,7 @@ function Nutrition() {
     function giveSearchResults() {
         fetch('https://api.api-ninjas.com/v1/nutrition?query=' + searchInput, {
             method: 'GET',
-            headers: { 'X-Api-Key': 'bMxQSkd43Sy3FQYD50efrg==XxNceF4LNlS0s0LS' },
+            headers: { 'X-Api-Key': process.env.REACT_APP_API_KEY },
             contentType: 'application/json'
         }).then(res => res.json())
             .then(data => {
@@ -58,7 +59,7 @@ function Nutrition() {
             </div>
 
             {resultsListed.length > 0 ? resultsListed : <h1 id="noSearchResultsText">Search by weight followed by the food!</h1>}
-            
+
         </div>
     )
 }
