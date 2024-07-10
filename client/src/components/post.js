@@ -2,12 +2,16 @@ import React, { useEffect, useState, useContext } from "react";
 import { SignedInContext } from "./App";
 import { Link } from "react-router-dom";
 import CommentContainer from "./commentContainer";
+import ToggleEditDelete from "./toggleEditDelete";
+import EditPost from "./editPost";
 
-function Post({ post }) {
+function Post({ post, updatePostsState, deletePostFromState }) {
     const [isLiked, setIsLiked] = useState(false)
     const [likes, setLikes] = useState(post.likes)
     const [signedIn] = useContext(SignedInContext)
     const [toggleComments, setToggleComments] = useState(false)
+    const [toggleEditDelete, setToggleEditDelete] = useState(false)
+    const [editPost, setEditPost] = useState(false)
     const [comments, setComments] = useState([])
 
 
@@ -84,7 +88,39 @@ function Post({ post }) {
         }
     }
 
+    //? Logic to handle editing posts and updating state
+    function savePostEdit(values){
+        fetch(`/api/post/${post.id}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(values)
+        }).then(res => {
+            if(res.ok){
+                res.json().then(data => {
+                    updatePostsState(data)
+                    setEditPost(!editPost)
+                    setToggleEditDelete(!toggleEditDelete)
+                })
+            }
+        })
+    }
+
+    //? Logic to handle deleting posts and updating state
+    function deletePost(){
+        fetch(`/api/post/${post.id}`, {
+            method: 'DELETE'
+        }).then(res => {
+            if(res.ok){
+                deletePostFromState(post)
+            }
+        })
+    }
+
     const formattedCreatedAt = post.created_at.slice(0, 11)
+
+
 
 
     return (
@@ -98,13 +134,17 @@ function Post({ post }) {
                         <p>{formattedCreatedAt}</p>
                     </div>
                     <div className="postTextMiddle">
-                        <p>{post.content}</p>
+                        {editPost ? <EditPost post={post} saveEdit={savePostEdit} /> : <p>{post.content}</p>}
                     </div>
                     <div className="postTextBottom">
                         {isLiked
                             ? <p className="likeButton" onClick={() => likeUnlikePost()}>❤️{likes}</p>
                             : <p className="likeButton" onClick={() => likeUnlikePost()}>🤍{likes}</p>}
                         <p className="toggleCommentsClick" onClick={() => setToggleComments(!toggleComments)}>{toggleComments ? "Hide Comments" : "Show Comments"}</p>
+                        {post.user.id === signedIn.id
+                            ? <ToggleEditDelete deletePost={deletePost} toggleEditDelete={toggleEditDelete} setToggleEditDelete={setToggleEditDelete} editPost={editPost} setEditPost={setEditPost} />
+                            : null}
+
                     </div>
                 </div>
 

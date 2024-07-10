@@ -8,7 +8,6 @@ function CreatePost({ setPosts, posts }) {
 
     //? Function to handle creating a post that persists
     function handlePostSubmit(values) {
-        console.log(values)
 
         fetch('/posts', {
             method: 'POST',
@@ -35,7 +34,7 @@ function CreatePost({ setPosts, posts }) {
         <div id="createPostCont">
 
             <img id="createPostPhoto" src={signedIn.image_url} alt="profile-photo" />
-            
+
             <div>
                 <h2>What's on your mind?</h2>
                 <Formik

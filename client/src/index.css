@@ -717,7 +717,46 @@ width: 100%;
   cursor: pointer;
 }
 
+.toggleEditDeleteCont{
+position: relative;
+height: 30px;
+width: 30px;
+margin: 0;
+}
 
+.toggleEditDeleteCont p{
+  font-size: 1.3rem;
+  margin: 0;
+  height: 29px;
+  transform: rotate(90deg);
+  cursor: pointer;
+}
+
+.toggleEditDeleteCont div{
+position: absolute;
+width: 100px;
+margin: 0;
+}
+
+.toggleEditDeleteCont button{
+  background-color: #34571c;
+  color: #fff;
+  cursor: pointer;
+}
+
+.editPostFormCont{
+  padding-bottom: 7px;
+}
+
+.editPostFormCont form textarea{
+  width: 100%;
+}
+
+.editPostFormCont form span button{
+  background-color: #34571c;
+  color: #fff;
+  cursor: pointer;
+}
 
 
 /*--------- Comments -------------*/

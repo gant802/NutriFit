@@ -244,6 +244,17 @@ class PostsById(Resource):
         except ValueError as v_error:
             return make_response({'errors': str(v_error)}, 400)
         
+    #deletes a post    
+    def delete(self, post_id):
+        post = Post.query.filter(Post.id == post_id).first()
+        if not post:
+            response = {"error": "Post not found"}
+            return make_response(response, 404)
+        db.session.delete(post)
+        db.session.commit()
+
+        return '', 204
+        
 api.add_resource(PostsById, '/api/post/<int:post_id>')
 
 class AddLikeToPost(Resource):
