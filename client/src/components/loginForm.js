@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 
 function LoginForm({ switchPage, setSwitchPage }) {
-    const [setSignedIn] = useContext(SignedInContext)
+    const [signedIn, setSignedIn] = useContext(SignedInContext)
     const [error, setError] = useState("")
     const navigate = useNavigate()
 

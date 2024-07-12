@@ -38,20 +38,21 @@ function UserProfile() {
                     res.json().then(data => setPosts(data))
                 }
             }).catch(error => console.log(error))
-    }, [id])
 
-    // Checks if the user is following the user on the profile page
-    useEffect(() => {
-        fetch('/following')
+            fetch('/following')
             .then(res => {
                 if (res.ok) {
                     res.json().then(data => {
                         const isUserFollowing = data.some(followRel => followRel.id == id);
+                        console.log("Line 44 in user profile")
                         setIsFollowing(isUserFollowing);
                     })
                 }
             })
-    }, [])
+
+
+
+    }, [id])
 
 
     //? Function to log user out
@@ -79,7 +80,7 @@ function UserProfile() {
         <div id="userProfileCont">
 
             <UserInfo user={profileOfUser} logout={logout} signedInUser={signedIn} isFollowing={isFollowing} setIsFollowing={setIsFollowing} />
-            
+
             <div id="userContentCont">
                 <div id="userWorkoutsPostsTitleCont">
                     <h2 className="userWorkoutsPostsTitle" onClick={() => setSeeWorkouts(true)}>Workouts</h2>
