@@ -5,7 +5,7 @@
 This project was created solely by myself (Grant Cummings) for the purpose of having an app with an all in one fitness journey feel. It has the social aspect, workout aspect and the usually unseen part of trying to eat healthy. 
 
 ## Demonstration Video
-https://www.youtube.com/watch?v=YqD22cjPON0&ab_channel=GrantCummings
+https://www.youtube.com/watch?v=lCDHUQ4bo_k&ab_channel=GrantCummings
 
 ## Deployed Project Link
 --Link will go here once it is up and running!--
