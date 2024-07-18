@@ -21,6 +21,7 @@ function Post({ post, updatePostsState, deletePostFromState }) {
             .then(res => {
                 if (res.ok) {
                     setIsLiked(true)
+                    console.log("line 24 post.js")
                 }
             })
 
@@ -114,6 +115,14 @@ function Post({ post, updatePostsState, deletePostFromState }) {
         }).then(res => {
             if(res.ok){
                 deletePostFromState(post)
+            }
+        })
+
+        fetch(`/delete_all_likes/${post.id}`, {
+            method: 'DELETE'
+        }).then(res => {
+            if(res.ok){
+                return
             }
         })
     }

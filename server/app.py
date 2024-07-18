@@ -322,6 +322,19 @@ class CommentsByPostId(Resource):
 api.add_resource(CommentsByPostId, '/comments/<int:post_id>')
 
 
+class DeleteAllLikes(Resource):
+    def delete(self, post_id):
+        likes = UserLikedPost.query.filter_by(liked_post_id=post_id).all()
+        if likes:
+            for like in likes:
+                db.session.delete(like)
+                db.session.commit()
+                return make_response('All likes deleted', 200)
+            else:
+                return make_response('No likes found', 404)
+            
+api.add_resource(DeleteAllLikes, '/delete_all_likes/<int:post_id>')
+
 
 
 class LikedPost(Resource):
