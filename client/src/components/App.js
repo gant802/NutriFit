@@ -6,10 +6,11 @@ export const SignedInContext = React.createContext()
 
 function App() {
 
-
+  //Creating signed in context to be used throughout app
   const [signedIn, setSignedIn] = useState(false)
   const [searchMaxReached, setSearchMaxReached] = useState(false)
 
+  //Checks if a user is signed in and authorization for max number of nutrition searches
   useEffect(() => {
     fetch('/check_session')
       .then(resp => {
