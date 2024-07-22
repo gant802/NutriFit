@@ -82,9 +82,6 @@ class User(db.Model, SerializerMixin):
         if favorite_workout and len(favorite_workout) > 50:
             raise ValueError('Favorite workout cannot be longer than 50 characters')
         return favorite_workout
-    
-
-
 
 
 
@@ -109,6 +106,7 @@ class Workout(db.Model, SerializerMixin):
 
     user_workouts = db.relationship("UserWorkout", back_populates = "workout")
     user = association_proxy("user_workouts", "user")
+    workout_routine_relationships = db.relationship("WorkoutRoutineRelationship", back_populates="workout" )
 
     __table_args__ = (
         db.CheckConstraint("level IN ('beginner', 'intermediate', 'expert')", name='ck_workout_level'),
@@ -140,9 +138,6 @@ class Workout(db.Model, SerializerMixin):
 
 
 
-
-
-
 class UserWorkout(db.Model, SerializerMixin):
     __tablename__ = 'user_workouts'
 
@@ -170,8 +165,7 @@ class WorkoutCalendarEvent(db.Model, SerializerMixin):
 
     user = db.relationship("User", back_populates="workout_calendar_events")
 
-
-        
+   
 
 class Post(db.Model, SerializerMixin):
     __tablename__ = 'posts'
@@ -248,7 +242,9 @@ class Follow(db.Model, SerializerMixin):
             
 
         return value
-    
+
+
+
 class Comment(db.Model, SerializerMixin):
     __tablename__ = 'comments'
 
@@ -275,10 +271,37 @@ class Comment(db.Model, SerializerMixin):
             raise ValueError("Comment cannot be empty")
         return comment
 
-        
+
+
 class UserLikedPost(db.Model, SerializerMixin):
     __tablename__ = 'user_liked_posts'
 
     id = db.Column(db.Integer, primary_key=True)
     liked_post_id = db.Column(db.Integer, db.ForeignKey('posts.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+
+class WorkoutRoutine(db.Model, SerializerMixin):
+    __tablename__ = 'workout_routines'
+
+    serialize_rules = ('-workout_routine_relationships.workout_routine',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+
+    workout_routine_relationships = db.relationship("WorkoutRoutineRelationship", back_populates="workout_routine")
+    workouts = association_proxy("workout_routine_relationships", "workout")
+   
+
+class WorkoutRoutineRelationship(db.Model, SerializerMixin):
+    __tablename__ = 'workout_routine_relationships'
+
+    serialize_rules = ('-workout_routine.workout_routine_relationships',)
+
+    id = db.Column(db.Integer, primary_key=True)
+    workout_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
+    workout_routine_id = db.Column(db.Integer, db.ForeignKey('workout_routines.id'))
+
+    workout_routine = db.relationship("WorkoutRoutine", back_populates="workout_routine_relationships")
+    workout = db.relationship("Workout", back_populates="workout_routine_relationships")
