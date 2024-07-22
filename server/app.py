@@ -8,7 +8,7 @@ from flask_restful import Resource
 
 # Local imports
 from config import app, db, api
-from models import User, Workout, UserWorkout, WorkoutCalendarEvent, Post, UserLikedPost, Follow, Comment
+from models import User, Workout, UserWorkout, WorkoutCalendarEvent, Post, UserLikedPost, Follow, Comment, WorkoutRoutine, WorkoutRoutineRelationship
 # Add your model imports
 
 
@@ -18,6 +18,8 @@ from models import User, Workout, UserWorkout, WorkoutCalendarEvent, Post, UserL
 def index():
     return '<h1>Project Server</h1>'
 
+
+#? User-------------------
 class Users(Resource):
     def get(self):
         users = User.query.all()
@@ -96,7 +98,7 @@ api.add_resource(UserWorkoutById, '/user_workout/<int:user_id>/<int:workout_id>'
 
 
 
-
+#? Workouts---------------
 class Workouts(Resource):
     def get(self):
         workouts = Workout.query.all()
@@ -178,9 +180,52 @@ api.add_resource(WorkoutsCalendarEvent, '/workouts_calendar_event')
 
 
 
+#? Workout Routines-------------
+class Routines(Resource):
+    def get (self):
+        routines = WorkoutRoutine.query.all()
+        if routines:
+            routines = [routine.to_dict() for routine in routines]
+            return make_response(routines, 200)
+        else:
+            return make_response('Routine not found', 404)
+        
+    def post (self):
+        params = request.json
+        try:
+            routine = WorkoutRoutine(name=params['name'], user_id=params['user_id'])
+            db.session.add(routine)
+            db.session.commit()
+            return make_response(routine.to_dict(), 201)
+        except Exception as e:
+            return make_response(str(e), 400)
+
+api.add_resource(Routines, '/routines')
+
+class WorkoutsByRoutineId(Resource):
+    def get (self, routine_id):
+        workouts = WorkoutRoutineRelationship.query.filter_by(workout_routine_id=routine_id).all()
+        if workouts:
+            workouts_dict = [workout.to_dict() for workout in workouts]
+            return make_response(workouts_dict, 200)
+        else:
+            return make_response({"error": "no workouts for this routine"}, 404)
+        
+    def post (self, routine_id):
+        params = request.json
+        try:
+            addedWorkout = WorkoutRoutineRelationship(workout_id=params['workout_id'], workout_routine_id=routine_id)
+            db.session.add(addedWorkout)
+            db.session.commit()
+            return make_response(addedWorkout.to_dict(), 201)
+        except Exception as e:
+            return make_response(str(e), 400)
+
+api.add_resource(WorkoutsByRoutineId, '/workouts/routine/<int:routine_id>')
 
 
 
+#? Post-----------------
 class Posts(Resource):
     def get(self):
         posts = Post.query.all()
@@ -216,7 +261,6 @@ class Posts(Resource):
             return make_response({'errors': ['An unexpected error occurred.']}, 500)
         
 api.add_resource(Posts, '/posts')
-
 
 class PostsById(Resource):
     def get(self, post_id):
@@ -294,8 +338,6 @@ class PostsByUserId(Resource):
         
 api.add_resource(PostsByUserId, "/posts/user/<int:user_id>")
 
-
-
 class CommentsByPostId(Resource):
     def get(self, post_id):
         comments = Comment.query.filter_by(post_id=post_id).all()
@@ -321,7 +363,6 @@ class CommentsByPostId(Resource):
 
 api.add_resource(CommentsByPostId, '/comments/<int:post_id>')
 
-
 class DeleteAllLikes(Resource):
     def delete(self, post_id):
         likes = UserLikedPost.query.filter_by(liked_post_id=post_id).all()
@@ -334,8 +375,6 @@ class DeleteAllLikes(Resource):
                 return make_response('No likes found', 404)
             
 api.add_resource(DeleteAllLikes, '/delete_all_likes/<int:post_id>')
-
-
 
 class LikedPost(Resource):
     def get(self, user_id, liked_post_id):
@@ -368,6 +407,8 @@ api.add_resource(LikedPost, '/liked_post/<int:user_id>/<int:liked_post_id>')
 
 
 
+
+#? Follow/Unfollow--------------
 class Following(Resource):
     #returns all users that the user is following
     def get(self):
@@ -392,7 +433,6 @@ class Following(Resource):
             return make_response(new_follow.to_dict(), 201)
         except ValueError as v_error:
             return make_response({'errors': [str(v_error)]}, 400)
-    
         
 api.add_resource(Following, '/following')
 
@@ -420,7 +460,6 @@ class FollowersByUserId(Resource):
     
 api.add_resource(FollowersByUserId, '/followers/<int:user_id>')
 
-#deletes a following relationship
 class Unfollow(Resource):
     def delete(self, id):
         follow = Follow.query.filter_by(following_user_id=id, follower_user_id=session['user_id']).first()
@@ -453,6 +492,9 @@ class SearchResultsMax(Resource):
             return {'message': 'Maximum searches limit reached'}, 401
 
 api.add_resource(SearchResultsMax, '/search_results_max')
+
+
+
 
 
 #? Authentication------------------------------
@@ -520,6 +562,9 @@ class Logout(Resource):
         return make_response({}, 204)
 
 api.add_resource(Logout, '/logout')
+
+
+
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)

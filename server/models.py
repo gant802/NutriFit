@@ -281,10 +281,11 @@ class UserLikedPost(db.Model, SerializerMixin):
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
 
 
+
 class WorkoutRoutine(db.Model, SerializerMixin):
     __tablename__ = 'workout_routines'
 
-    serialize_rules = ('-workout_routine_relationships.workout_routine',)
+    serialize_rules = ('-workout_routine_relationships',)
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
@@ -293,11 +294,19 @@ class WorkoutRoutine(db.Model, SerializerMixin):
     workout_routine_relationships = db.relationship("WorkoutRoutineRelationship", back_populates="workout_routine")
     workouts = association_proxy("workout_routine_relationships", "workout")
    
+    @validates('name')
+    def validate_username(self, key, username):
+        if not username:
+            raise ValueError('Username cannot be empty')
+        elif len(username) > 50:
+            raise ValueError('Username cannot be longer than 20 characters')
+        return username
+
 
 class WorkoutRoutineRelationship(db.Model, SerializerMixin):
     __tablename__ = 'workout_routine_relationships'
 
-    serialize_rules = ('-workout_routine.workout_routine_relationships',)
+    serialize_rules = ('-workout_routine', '-workout.workout_routine_relationships')
 
     id = db.Column(db.Integer, primary_key=True)
     workout_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
