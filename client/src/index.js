@@ -13,6 +13,7 @@ import UserProfile from "./Pages/userProfile";
 import WorkoutsPage from "./Pages/workoutsPage";
 import LandingPage from "./Pages/landingPage";
 import EditProfile from "./components/editProfile";
+import RoutinesPage from "./Pages/routines";
 
 const routes = [
 {
@@ -26,6 +27,10 @@ children: [
     {
         path: '/loginOrCreate',
         element: <LoginOrCreate />
+    },
+    {
+        path: '/routines/:id',
+        element: <RoutinesPage />
     },
     {
         path: '/createProfile',

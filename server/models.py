@@ -146,11 +146,16 @@ class UserWorkout(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     workout_id = db.Column(db.Integer, db.ForeignKey('workouts.id'))
-
+    info = db.Column(db.String)
 
     user = db.relationship("User", back_populates = "user_workouts")
     workout = db.relationship("Workout", back_populates = "user_workouts")
 
+    @validates('info')
+    def validate_username(self, key, info):
+        if len(info) > 70:
+            raise ValueError("Content cannot be over 70 characters")
+        return info
 
 
 class WorkoutCalendarEvent(db.Model, SerializerMixin):

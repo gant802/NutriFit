@@ -61,11 +61,14 @@ background-color: #fff;
   border-radius: 50%;
 }
 
+.navbarLineBreak{
+  border-right: 3px solid white;
+}
+
 #navbarCont {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid black;
   padding: 20px;
   background-color: black;
 }
