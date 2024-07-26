@@ -1,37 +1,42 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import CreateRoutine from "../components/createRoutine";
 import RoutineNode from "../components/routineNode";
+import SearchRoutines from "../components/searchRoutines";
 
-function RoutinesPage(){
+function RoutinesPage() {
     const [shownRoutines, setShownRoutines] = useState([])
+    const [searchInput, setSearchInput] = useState("")
 
     useEffect(() => {
         fetch('http://127.0.0.1:5555/routines')
-        .then(resp => {
-            if (resp.ok){
-                resp.json().then(data => setShownRoutines(data))
-            }
-        })
-    })
+            .then(resp => {
+                if (resp.ok) {
+                    resp.json().then(data => setShownRoutines(data))
+                }
+            })
+    }, [])
+
 
     const routinesListed = shownRoutines.map(routine => {
-        return <RoutineNode key={routine.id} routine={routine}/> 
+        if (routine.name.toLowerCase().includes(searchInput.toLowerCase())){
+            return <RoutineNode key={routine.id} routine={routine} />
+        } 
+        
     })
 
     return (
         <div>
             <h1>Routines</h1>
             <div>
-                <p>-Create your own routines</p>
-                <p>-Add to existing routines</p>
-                <p>-Edit your routines</p>
-                <p>-Get rid of routines</p>
+                <p>Search Routines</p>
+                <SearchRoutines setSearchInput={setSearchInput} searchInput={searchInput}/> 
             </div>
             <div>
-                <CreateRoutine />
-                <div>
-                    {routinesListed}
-                </div>
+                <p>Create Routine</p>
+                <CreateRoutine setShownRoutines={setShownRoutines} shownRoutines={shownRoutines} />
+            </div>
+            <div>
+                {routinesListed}
             </div>
         </div>
     )
