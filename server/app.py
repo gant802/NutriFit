@@ -122,7 +122,7 @@ class Workouts(Resource):
             return make_response(workout.to_dict(), 201)
         except Exception as e:
             return make_response(str(e), 400)
-        
+
 api.add_resource(Workouts, '/workouts')
 
 class WorkoutById(Resource):

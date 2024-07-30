@@ -90,7 +90,7 @@ function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUs
                     ? <button className="workoutPageButtons" onClick={handleAddToCalendar}>{isAddedToCalendar ? "Added To Calendar!" : "Add To Calendar"}</button>
                     : <button className="workoutPageButtons" onClick={handleAddToProfile}>{isAddedToProfile ? "Remove From Profile" : "Add to Profile"}</button>}
             </div>
-
+                    <img src={workout.image_url}/>
         </div>
     )
 }

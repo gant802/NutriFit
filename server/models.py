@@ -103,6 +103,7 @@ class Workout(db.Model, SerializerMixin):
     secondary_muscles = db.Column(db.String)
     instructions = db.Column(db.String, nullable=False)
     category = db.Column(db.String)
+    image_url = db.Column(db.String)
 
     user_workouts = db.relationship("UserWorkout", back_populates = "workout")
     user = association_proxy("user_workouts", "user")
@@ -123,9 +124,7 @@ class Workout(db.Model, SerializerMixin):
     
     @validates('instructions')
     def validate_instructions(self, key, instructions):
-        if not instructions:
-            raise ValueError('Instructions cannot be empty')
-        elif len(instructions) > 3500:
+        if len(instructions) > 3500:
             raise ValueError('Instructions cannot be longer than 200 characters')
         return instructions
     
