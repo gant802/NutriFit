@@ -14,6 +14,7 @@ import WorkoutsPage from "./Pages/workoutsPage";
 import LandingPage from "./Pages/landingPage";
 import EditProfile from "./components/editProfile";
 import RoutinesPage from "./Pages/routines";
+import IndividualRotuine from "./Pages/individualRoutine";
 
 const routes = [
 {
@@ -31,6 +32,10 @@ children: [
     {
         path: '/routines/:id',
         element: <RoutinesPage />
+    },
+    {
+        path: '/routine/:id',
+        element: <IndividualRotuine/>
     },
     {
         path: '/createProfile',

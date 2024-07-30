@@ -295,6 +295,7 @@ class WorkoutRoutine(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    image_src = db.Column(db.String)
 
     workout_routine_relationships = db.relationship("WorkoutRoutineRelationship", back_populates="workout_routine")
     workouts = association_proxy("workout_routine_relationships", "workout")

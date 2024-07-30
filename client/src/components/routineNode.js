@@ -1,9 +1,10 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function RoutineNode({routine}){
     return (
         <div>
-            <p>{routine.name}</p>
+            <Link to={`/routine/${routine.id}`}>{routine.name}</Link>
         </div>
     )
 }
