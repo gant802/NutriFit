@@ -64,8 +64,8 @@ function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUs
 
     return (
         <div className="workoutNodeCont">
-
-            <div className="workoutNodeDetailsOuter">
+            <div>
+                <div className="workoutNodeDetailsOuter">
                 <h2 className="showWorkoutDetails" onClick={() => setShowDetails(!showDetails)}>{showDetails ? "Close Details" : "Show Details"}</h2>
                 {!showDetails ? <h3>{workout.name}</h3> :
                     <div className="workoutDetailsCont">
@@ -90,7 +90,11 @@ function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUs
                     ? <button className="workoutPageButtons" onClick={handleAddToCalendar}>{isAddedToCalendar ? "Added To Calendar!" : "Add To Calendar"}</button>
                     : <button className="workoutPageButtons" onClick={handleAddToProfile}>{isAddedToProfile ? "Remove From Profile" : "Add to Profile"}</button>}
             </div>
-                    <img src={workout.image_url}/>
+            </div>
+            <div>
+                {!showDetails ? <img className="workoutNodeImage" src={workout.image_url}/> : ""}
+            </div>
+                    
         </div>
     )
 }
