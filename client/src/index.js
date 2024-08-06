@@ -34,7 +34,7 @@ children: [
         element: <RoutinesPage />
     },
     {
-        path: '/routine/:id',
+        path: '/routine/:id/:user_id',
         element: <IndividualRotuine/>
     },
     {

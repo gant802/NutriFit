@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import CreateRoutine from "../components/createRoutine";
 import RoutineNode from "../components/routineNode";
 import SearchRoutines from "../components/searchRoutines";
+import { SignedInContext } from "../components/App";
 
 function RoutinesPage() {
     const [shownRoutines, setShownRoutines] = useState([])
     const [searchInput, setSearchInput] = useState("")
+    const [signedIn] = useContext(SignedInContext)
 
     useEffect(() => {
         fetch('http://127.0.0.1:5555/routines')
@@ -19,7 +21,7 @@ function RoutinesPage() {
 
     const routinesListed = shownRoutines.map(routine => {
         if (routine.name.toLowerCase().includes(searchInput.toLowerCase())){
-            return <RoutineNode key={routine.id} routine={routine} />
+            return <RoutineNode signedIn={signedIn} key={routine.id} routine={routine} />
         } 
         
     })

@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import WorkoutNode from "./workoutNode";
 import { useParams } from "react-router-dom";
 import { UsePagination } from "./pagination";
-import { isInteger } from "formik";
 
 function WorkoutsContainer({ workouts }) {
     const [userWorkouts, setUserWorkouts] = useState([])
     const { id } = useParams()
     const [currentPage, setCurrentPage] = useState(1)
+    
 
     const pageSize = 30
     const pagination = UsePagination({
