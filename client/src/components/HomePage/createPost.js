@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Formik } from "formik";
 import * as yup from 'yup';
-import { SignedInContext } from "./App";
+import { SignedInContext } from "../App";
 
 function CreatePost({ setPosts, posts }) {
     const [signedIn] = useContext(SignedInContext);

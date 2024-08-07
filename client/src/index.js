@@ -6,13 +6,13 @@ import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import App from "./components/App"
 import Home from "./Pages/home";
 import LoginOrCreate from "./Pages/loginCreate";
-import CreateProfile from "./components/createProfile";
+import CreateProfile from "./components/Profile+Login/createProfile";
 import CalendarPage from "./Pages/calendar";
 import Nutrition from "./Pages/nutrition";
 import UserProfile from "./Pages/userProfile";
 import WorkoutsPage from "./Pages/workoutsPage";
 import LandingPage from "./Pages/landingPage";
-import EditProfile from "./components/editProfile";
+import EditProfile from "./components/Profile+Login/editProfile";
 import RoutinesPage from "./Pages/routines";
 import IndividualRotuine from "./Pages/individualRoutine";
 

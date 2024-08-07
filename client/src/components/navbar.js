@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { SignedInContext } from "./App";
-import UserNode from "./userNode";
+import UserNode from "./Profile+Login/userNode"
 
 function Navbar() {
     const [signedIn] = useContext(SignedInContext);

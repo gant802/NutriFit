@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import WorkoutNode from "./workoutNode";
 import { useParams } from "react-router-dom";
-import { UsePagination } from "./pagination";
+import { UsePagination } from "../pagination";
 
 function WorkoutsContainer({ workouts }) {
     const [userWorkouts, setUserWorkouts] = useState([])

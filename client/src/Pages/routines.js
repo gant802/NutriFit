@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
-import CreateRoutine from "../components/createRoutine";
-import RoutineNode from "../components/routineNode";
-import SearchRoutines from "../components/searchRoutines";
+import CreateRoutine from "../components/Routines/createRoutine";
+import RoutineNode from "../components/Routines/routineNode";
+import SearchRoutines from "../components/Routines/searchRoutines";
 import { SignedInContext } from "../components/App";
 
 function RoutinesPage() {

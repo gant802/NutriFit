@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { SignedInContext } from "../components/App";
+import { SignedInContext } from "../App";
 
 
 function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUserWorkouts }) {

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import { useParams } from "react-router-dom";
-import WorkoutNode from "../components/workoutNode";
+import WorkoutNode from "../components/Workouts/workoutNode";
 
 
 function IndividualRotuine(){ 
@@ -8,6 +8,7 @@ function IndividualRotuine(){
     const [workouts, setWorkouts] = useState([])
     const [loadError, setLoadError] = useState("Loading...")
     const [userWorkouts, setUserWorkouts] = useState([])
+    const [routine, setRoutine] = useState({})
   
     
 
@@ -26,6 +27,12 @@ function IndividualRotuine(){
                     res.json().then(data => setUserWorkouts(data))
                 }
             }).catch(error => console.log(error))
+        fetch(`/routine/${id}`)
+        .then(resp => {
+            if (resp.ok){
+                resp.json().then(data => setRoutine(data))
+            }
+        }).catch(error => setLoadError(error))
     }, [])
 
     const workoutsListed = workouts.map((exercise, index) => {
@@ -38,7 +45,7 @@ function IndividualRotuine(){
 
     return (
         <div>
-            <p>{loadError}</p>
+            <p>{routine.name}</p>
             <div>
                 {workoutsListed}
             </div>

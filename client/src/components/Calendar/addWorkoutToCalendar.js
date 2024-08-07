@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import WorkoutNode from "./workoutNode";
+import WorkoutNode from "../Workouts/workoutNode";
 
 
 function AddWorkoutToCalendar({ workouts, date, signedIn, workoutsOnDay, setWorkoutsOnDay }) {

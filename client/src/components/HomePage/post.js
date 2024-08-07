@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { SignedInContext } from "./App";
+import { SignedInContext } from "../App";
 import { Link } from "react-router-dom";
 import CommentContainer from "./commentContainer";
 import ToggleEditDelete from "./toggleEditDelete";

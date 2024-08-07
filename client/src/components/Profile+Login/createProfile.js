@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
-import { SignedInContext } from "./App";
+import { SignedInContext } from "../App";
 
 function CreateProfile({ switchPage, setSwitchPage }) {
     const navigate = useNavigate()

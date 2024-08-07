@@ -1,7 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Formik } from "formik";
 import * as yup from 'yup'
-import { SignedInContext } from "../components/App";
+import { SignedInContext } from "../App";
 import { useNavigate } from "react-router-dom";
 
 function EditProfile() {

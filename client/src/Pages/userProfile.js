@@ -1,9 +1,9 @@
 import React, { useContext, useState, useEffect } from "react";
 import { SignedInContext } from "../components/App";
 import { useNavigate, useParams } from "react-router-dom";
-import WorkoutNode from "../components/workoutNode";
-import UserInfo from "../components/userInfo";
-import PostsContainer from "../components/postsContainer";
+import WorkoutNode from "../components/Workouts/workoutNode";
+import UserInfo from "../components/Profile+Login/userInfo";
+import PostsContainer from "../components/HomePage/postsContainer";
 
 function UserProfile() {
     const [signedIn, setSignedIn] = useContext(SignedInContext)

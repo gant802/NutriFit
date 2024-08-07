@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import LoginForm from "../components/loginForm";
-import CreateProfile from "../components/createProfile";
+import LoginForm from "../components/Profile+Login/loginForm";
+import CreateProfile from "../components/Profile+Login/createProfile";
 
 function LoginOrCreate() {
     const [switchPage, setSwitchPage] = useState(false)

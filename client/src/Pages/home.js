@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
-import PostsContainer from "../components/postsContainer";
-import CreatePost from "../components/createPost";
+import PostsContainer from "../components/HomePage/postsContainer";
+import CreatePost from "../components/HomePage/createPost";
 
 function Home(){
     const [posts, setPosts] = useState([]);

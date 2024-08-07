@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import WorkoutsContainer from "../components/workoutsContainer";
-import CreateWorkout from "../components/createWorkout";
+import WorkoutsContainer from "../components/Workouts/workoutsContainer";
+import CreateWorkout from "../components/Workouts/createWorkout";
 
 function WorkoutsPage() {
     const [workouts, setWorkouts] = useState([]);

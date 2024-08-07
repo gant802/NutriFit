@@ -193,7 +193,7 @@ class Routines(Resource):
     def post (self):
         params = request.json
         try:
-            routine = WorkoutRoutine(name=params['name'], user_id=params['user_id'])
+            routine = WorkoutRoutine(name=params['name'], user_id=params['user_id'], image_src=params['image_src'])
             db.session.add(routine)
             db.session.commit()
             return make_response(routine.to_dict(), 201)
@@ -201,6 +201,16 @@ class Routines(Resource):
             return make_response(str(e), 400)
 
 api.add_resource(Routines, '/routines')
+
+class RoutineById(Resource):
+    def get (self, id):
+        routine = WorkoutRoutine.query.filter_by(id=id).first()
+        if routine:
+            return make_response(routine.to_dict(), 200)
+        else:
+            return make_response('Routine not found', 404)
+
+api.add_resource(RoutineById, '/routine/<int:id>')
 
 class WorkoutsByRoutineId(Resource):
     def get (self, routine_id):

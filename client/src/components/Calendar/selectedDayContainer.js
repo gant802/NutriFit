@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import AddWorkoutToCalendar from "./addWorkoutToCalendar";
-import { SignedInContext } from "../components/App";
-import WorkoutNode from "./workoutNode";
+import { SignedInContext } from "../App";
+import WorkoutNode from "../Workouts/workoutNode";
 import { useParams } from "react-router-dom";
 
 function SelectedDayContainer({ date }) {
