@@ -4,10 +4,12 @@ import RoutineNode from "../components/Routines/routineNode";
 import SearchRoutines from "../components/Routines/searchRoutines";
 import { SignedInContext } from "../components/App";
 
+
 function RoutinesPage() {
     const [shownRoutines, setShownRoutines] = useState([])
     const [searchInput, setSearchInput] = useState("")
     const [signedIn] = useContext(SignedInContext)
+    const [showCreateRout, setShowCreateRout] = useState(false)
 
     useEffect(() => {
         fetch('http://127.0.0.1:5555/routines')
@@ -26,6 +28,7 @@ function RoutinesPage() {
         
     })
 
+
     return (
         <div>
             <h1>Routines</h1>
@@ -34,8 +37,10 @@ function RoutinesPage() {
                 <SearchRoutines setSearchInput={setSearchInput} searchInput={searchInput}/> 
             </div>
             <div>
-                <p>Create Routine</p>
-                <CreateRoutine setShownRoutines={setShownRoutines} shownRoutines={shownRoutines} />
+                <p style={{cursor: "pointer"}} onClick={() => setShowCreateRout(!showCreateRout)}>	&rarr;Create Routine&larr; </p>
+                {showCreateRout 
+                ? <CreateRoutine setShownRoutines={setShownRoutines} shownRoutines={shownRoutines} showCreate={setShowCreateRout} />
+                : ""}
             </div>
             <div>
                 {routinesListed}
