@@ -827,3 +827,8 @@ margin: 0;
   color: #007bff;
   font-size: 0.9rem;
 }
+
+/*------------ Routine ------------*/
+.routineImage {
+  width: 160px;
+}

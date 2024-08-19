@@ -12,9 +12,7 @@ function WorkoutNode({ workout, calendarPage, addToCalendar, userWorkouts, setUs
     useEffect(() => {
         if (userWorkouts && userWorkouts.find(workoutFound => workoutFound.workout_id === workout.id)) {
             setIsAddedToProfile(true)
-        }
-        console.log(userWorkouts)
-        
+        }  
     }, [userWorkouts])
 
     //? Logic to add a workout to the calendar
