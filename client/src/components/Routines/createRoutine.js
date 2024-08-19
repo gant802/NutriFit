@@ -5,8 +5,6 @@ import * as yup from 'yup';
 
 function CreateRoutine({ setShownRoutines, shownRoutines, showCreate }) {
     const [signedIn, setSignedIn] = useContext(SignedInContext);
-    const [routineName, setRoutineName] = useState("")
-    const [imageURL, setImageURL] = useState("")
     const [error, setError] = useState("")
 
 
