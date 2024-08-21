@@ -26,7 +26,7 @@ background-color: #fff;
 
 #searchWorkoutButton,
 #searchNutritionButton,
-#searchButtonAddToCalendar {
+.searchButtonAddToCalendar {
   background-color: #846c42;
   border-radius: 0px 20px 20px 0px;
   padding: 3px 10px;
@@ -475,24 +475,24 @@ background-color: #fff;
   margin: 0 auto;
 }
 
-#addWorkoutCont {
+.addWorkoutCont {
   margin: 15px 0 0 15px;
   max-height: 530px;
 }
 
 
-#addWorkoutHeader {
+.addWorkoutHeader {
   text-align: center;
   padding: 20px;
 }
 
-#addWorkoutToCalendarResultsCont {
+.addWorkoutToCalendarResultsCont {
   overflow: hidden;
   overflow-y: auto;
   max-height: 400px;
 }
 
-#searchInputAddToCalendar {
+.searchInputAddToCalendar {
   border-radius: 20px 0px 0px 20px;
   width: 270px;
 }

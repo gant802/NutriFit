@@ -46,12 +46,12 @@ function AddWorkoutToCalendar({ workouts, date, signedIn, workoutsOnDay, setWork
 
 
     return (
-        <div id="addWorkoutCont">
+        <div className="addWorkoutCont">
             
-            <div id="addWorkoutHeader">
+            <div className="addWorkoutHeader">
                 <h2>Add workout</h2>
                 <input
-                    id="searchInputAddToCalendar"
+                    className="searchInputAddToCalendar"
                     type="text"
                     placeholder="Search for workouts by name..."
                     value={searchInput}
@@ -59,9 +59,9 @@ function AddWorkoutToCalendar({ workouts, date, signedIn, workoutsOnDay, setWork
                         setSearchInput(e.target.value)
                     }}
                 />
-                <button id="searchButtonAddToCalendar">Search</button>
+                <button className="searchButtonAddToCalendar">Search</button>
             </div>
-            <div id="addWorkoutToCalendarResultsCont">
+            <div className="addWorkoutToCalendarResultsCont">
                 {searchInput === "" ? "" : workoutsListed}
             </div>
 

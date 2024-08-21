@@ -1,6 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext} from "react";
 import { useParams } from "react-router-dom";
 import WorkoutNode from "../components/Workouts/workoutNode";
+import AddWorkoutToRoutine from "../components/Routines/addWorkoutToRoutine";
+import { SignedInContext } from "../components/App";
 
 
 function IndividualRotuine(){ 
@@ -9,7 +11,8 @@ function IndividualRotuine(){
     const [loadError, setLoadError] = useState("Loading...")
     const [userWorkouts, setUserWorkouts] = useState([])
     const [routine, setRoutine] = useState({})
-  
+    const [signedIn, setSignedIn] = useContext(SignedInContext);
+
     
 
     useEffect(() => {
@@ -41,10 +44,12 @@ function IndividualRotuine(){
                          userWorkouts={userWorkouts}
                          setUserWorkouts={setUserWorkouts}/>
     })
+  
 
     return (
         <div>
             <p>{routine.name}</p>
+        {routine.user_id == signedIn.id ? <AddWorkoutToRoutine /> : ""}
             <div>
                 {workoutsListed.length ? workoutsListed : <p>{loadError}</p>}
             </div>
