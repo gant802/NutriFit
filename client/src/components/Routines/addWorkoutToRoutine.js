@@ -11,6 +11,11 @@ function AddWorkoutToRoutine(){
             .then(data => setAllWorkouts(data))
     }, [])
 
+    function handAddWorkout(workoutId) {
+        console.log(workoutId)
+        
+    }
+
     //Filter workouts based on search input
     const filteredWorkouts = allWorkouts.filter(workout => {
         return workout.name.toLowerCase().includes(searchInput.toLowerCase())
@@ -18,7 +23,10 @@ function AddWorkoutToRoutine(){
 
     //Render the filtered workouts immediatly to the page
     const workoutsListed = filteredWorkouts.map(workout => {
-        return <WorkoutNode key={workout.id} workout={workout} />
+        return (
+            <div onClick={e => handAddWorkout(workout.id)}>
+        <WorkoutNode key={workout.id} workout={workout} />
+        </div>)
     })
 
     return (
