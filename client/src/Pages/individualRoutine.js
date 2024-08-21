@@ -42,12 +42,11 @@ function IndividualRotuine(){
                          setUserWorkouts={setUserWorkouts}/>
     })
 
-
     return (
         <div>
             <p>{routine.name}</p>
             <div>
-                {workoutsListed}
+                {workoutsListed.length ? workoutsListed : <p>{loadError}</p>}
             </div>
         </div>
     )
